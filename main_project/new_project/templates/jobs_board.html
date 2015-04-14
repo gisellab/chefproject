@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block page_subtitle %}Jobs Board{% endblock %}
+
+{% block content %}
+
+    <div id="headbar">
+
+        {% block horizontalbar %}
+            <a href="{% url 'userprofilepage' %}" class="button">Profile Page</a>
+            <a href="{% url 'edit_settings_user' %}" class="button">Edit Settings</a>
+            <a href="{% url 'jobs_board' %}" class="button">Jobs Board</a>
+            <a href="{% url 'apply_for_a_new_job' %}" class="button">Apply For A New Job</a>
+            <a href="{% url 'jobs_pending_user' %}" class="button">Jobs Pending</a>
+            <a href="{% url 'buy_credit_user' %}" class="button">Buy Credit</a>
+
+        {% endblock %}
+    </div>
+
+{% endblock %}

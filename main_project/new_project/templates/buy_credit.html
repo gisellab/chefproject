@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block page_subtitle %}Buy Credit{% endblock %}
+
+{% block content %}
+
+    <div id="headbar">
+
+        {% block horizontalbar %}
+            <a href="{% url 'restaurantprofilepage' %}" class="button">Profile Page</a>
+            <a href="{% url 'edit_settings_restaurant' %}" class="button">Edit Settings</a>
+            <a href="{% url 'jobs_pending' %}" class="button">Jobs Pending</a>
+            <a href="{% url 'add_a_new_job' %}" class="button">Add New Job</a>
+            <a href="{% url 'buy_credit' %}" class="button">Buy Credit</a>
+            <a href="{% url 'previous_jobs' %}" class="button">Previous Jobs</a>
+
+        {% endblock %}
+  </div>
+
+        {% endblock %}

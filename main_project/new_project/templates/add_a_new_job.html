@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block page_subtitle %}Add a New Job{% endblock %}
+
+{% block menu %}
+
+    <div id="headbar">
+            <a href="{% url 'restaurantprofilepage' %}" class="button">Profile Page</a>
+            <a href="{% url 'edit_settings_restaurant' %}" class="button">Edit Settings</a>
+            <a href="{% url 'jobs_pending' %}" class="button">Jobs Pending</a>
+            <a href="{% url 'add_a_new_job' %}" class="button">Add New Job</a>
+            <a href="{% url 'buy_credit' %}" class="button">Buy Credit</a>
+            <a href="{% url 'previous_jobs' %}" class="button">Previous Jobs</a>
+
+    </div>
+
+{% endblock %}
+
+{% block content %}
+    </div>
+    <div id="postform">
+            <h1>Post a new job</h1>
+            <form>
+                <frameset id="frame">
+                    <label>
+                        <div> Name of Job: </div>
+                        <textarea style="width: 300px; height: 200px name="job_name" type="text"></textarea>
+                    </label>
+                        <br>
+                    <label>
+                        <div> Type of Worker Required: </div>
+                        <input type="radio" name="Worker">Chef
+                        <input type="radio" name="Worker">Bartender
+                        <input type="radio" name="Worker">Server
+                        <input type="radio" name="Worker">Dishwasher
+                    </label>
+                    <br>
+                    <label>
+                        <div> Date of Job: </div>
+                        <input name="job_date" type="date" id="datepicker">
+                    </label>
+                    <br>
+                    <label>
+                       <div> Number of hours required (4 hours minimium): </div>
+                        <input name="number_of_hours" type="number" value="4" min="4">
+                    </label>
+                    <br>
+                    <label>
+                        <div> Start time required: </div>
+                        <input name="start_time" type="time" value="4">
+                    </label>
+                    <br>
+                    <label>
+                        <div> Description of Job in 100 words: </div>
+                        <textarea style="width: 300px; height: 300px name="job_description" type="text" min="10" max="100"></textarea>
+                    </label>
+                </frameset>
+            </form>
+           <div><h2><input type="submit" name="submit" value="Post this job"></h2></div>
+    <script>
+  $(function() {
+    $( "#datepicker" ).datepicker();
+  });
+  </script>
+
+        {% endblock %}
+    </div>
+
+

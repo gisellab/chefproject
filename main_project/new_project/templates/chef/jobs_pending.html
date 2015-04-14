@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block page_subtitle %}Restaurant Profile Page{% endblock %}
+
+{% block content %}
+
+    <div id="headbar">
+
+    {% block horizontalbar %}
+
+            <h3><a href="{% url 'restaurantprofilepage' %}" class="button">Edit Settings</a></h3><br/>
+
+            <h3><a href="{% url 'edit_settings_restaurant' %}" class="button">Edit Settings</a></h3><br/>
+
+            <h3><a href= "{% url 'jobs_pending' %}" class="button">Jobs Pending</a></h3><br>
+
+            <h3><a href="{% url 'add_a_new_job' %}" class="button">Add New Job</a></h3><br>
+
+        <h3><a href="{% url 'buy_credit' %}" class="button">Buy Credit</a></h3><br>
+
+        <h3><a href="{% url 'previous_jobs' %}" class="button">Previous Jobs</a></h3><br>
+
+    {% endblock %}
+</div>
+
+<h3><a href= "{% url 'edit_settings_user' %}" class="button">Edit Settings </a></h3><br/>
+{% endblock %}

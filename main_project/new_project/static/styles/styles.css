@@ -1,0 +1,171 @@
+
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 0 0 100px;
+    font-family: Copperplate, sans-serif;
+}
+
+a {
+    color: darkslategrey;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+#logo {
+    background-color: #65C4FF;
+    /*background-image:  url(/static/images/chef.jpg);*/
+    width: 100px;
+    height: 100px;
+    background-size: 150px 150px;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    margin: 20;
+}
+
+#header {
+    background-color: #B27623;
+    color: white;
+    position: relative;
+    height: 200px;
+}
+
+#title {
+    display: inline-block;
+    text-align: center;
+    width: calc(100% - 150px);
+    right: 0;
+}
+
+#nav {
+    line-height: 20px;
+    background-color: #2E80B2;
+    color: white;
+    height: 100%;
+    width: 100px;
+    display: inline-block;
+    text-align: center;
+    padding: 0px 0 15px 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+#content {
+    background-color: white;
+    margin: 0 0 0 0;
+    position: relative;
+}
+
+#form {
+    background-color: azure;
+    padding: 100px 0 15px 0;
+    width: 400px;
+    font-size: 20px;
+}
+
+#footer {
+    background-color: #B27623;
+    color: white;
+    text-align: center;
+    padding: 0;
+    height: 100px;
+    margin: 10px 0 0 0;
+    width: 100%;
+    position: relative;
+}
+
+#mainimage {
+    background-color: azure;
+    display: inline-block;
+    top: 60px;
+    center: 0;
+    width: 100%,
+}
+
+#footertwo {
+    position: absolute;
+    padding: 2px;
+    height: 50px;
+    width: 200px;
+    left: 0;
+    /*top:0;*/
+}
+
+#footerthree {
+    position: absolute;
+    padding: 2px;
+    height: 50px;
+    width: 200px;
+    right: 0;
+    /*top:0;*/
+}
+
+#headbar {
+    line-height: 20px;
+    width: 100%;
+    color: white;
+    top: 0;
+    right: 0;
+    bottom:20px;
+    text-align: right;
+}
+
+#headbar a.button {
+    display: inline-block;
+    margin: 0;
+}
+
+#postform {
+    display: inline-block;
+    margin: 0 0 0 20px;
+    width: 800px;
+    height: 300px;
+    /*margin: 100px 0 0 0;*/
+}
+
+#postform label div {
+    width:400px;
+    display:inline-block;
+}
+
+#postform form div {
+    width:400px;
+    display:inline-block;
+}
+
+
+#frame {
+    border: 2px;
+    border-color: #1F2A7F;
+}
+
+#datepicker
+
+
+h1 {
+    font-size: 50px;
+}
+
+h2 {
+    font-size: 25px;
+}
+
+h3 {
+    font-size: 20px;
+}
+
+p {
+    font-size: 15px;
+}
+
+.button {
+    background-color: #FFBE65;
+    color: white;
+    padding: 20px;
+    margin: 0;
+    font-size: 20px;
+}

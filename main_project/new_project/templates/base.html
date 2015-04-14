@@ -1,0 +1,76 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/styles/styles.css"/>
+    <title>{% block title %}Chef{% endblock %}</title>
+<meta charset="utf-8">
+  <title>jQuery UI Datepicker - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/styles.css">
+
+</head>
+<body>
+
+<div id="header">
+    <div id="logo">
+    </div>
+    <div id="title">
+        <h1>{% block page_title %}Guest Chef{% endblock %}</h1>
+
+        <h2> {% block page_subtitle %}Connecting Restaurants with temporary staff{% endblock %}</h2>
+        {% if user.is_authenticated %}
+            <h2>Guest Chef says... hello {{ user.username }}!</h2>
+        {% else %}
+            <h2>Guest Chef says... hello!</h2>
+        {% endif %}
+    </div>
+</div>
+
+<div id="nav">
+
+    {% block sidebar %}
+        {% if user.is_authenticated %}
+            <h3><a href="{% url 'logout' %}">Logout</a></h3><br/>
+        {% else %}
+            <h3><a href= "{% url 'login' %}">Login</a></h3><br>
+
+            <h3><a href="{% url 'register' %}">Register Here</a></h3><br>
+        {% endif %}
+        <h3><a href="{% url 'facts_page' %}">Facts Page</a></h3><br>
+
+        <h3><a href="{% url 'contact_us' %}">Contact us</a></h3><br>
+
+        <h3><a href= "{% url 'mainpage' %}">About </a></h3><br/>
+
+    {% endblock %}
+</div>
+
+<!-- New line -->
+
+<div id="content">
+{% block menu %}{% endblock %}
+    <div id="mainimage"><img src="{% static "images/chefimage.jpg" %}" alt="Picture of Restaurant staff"/></div>
+
+    <h2> {% block page_name %}{% endblock %}</h2>
+{% block content %}
+
+
+
+<p>Date: <input type="text" id="datepicker"></p>
+
+{% endblock %}
+</div>
+<div id="footer">
+    <div id="footertwo">
+        Copyright © Guest Chef
+    </div>
+    <div id="footerthree">
+        Twitter
+    </div>
+</div>
+
+</body>
+</html>

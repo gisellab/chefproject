@@ -1,0 +1,24 @@
+
+#header {
+    width:780px;
+    background-color:#7080FF;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+#nav {
+    line-height:50px;
+    background-color:#1F2A7F;
+    height:500px;
+    width:200px;
+    float:left;
+    padding:5px;
+
+#footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px;
+}
