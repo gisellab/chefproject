@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import NewUserRestaurantForm, NewUserWorkerForm, NewUserProfileForm, NewRestaurantProfileForm
 from chef.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-
+from chef.models import PostNewJob
+from django.utils.dateparse import parse_date
 
 def register(request):
     # A boolean value for telling the template whether the registration was successful.
@@ -103,7 +104,7 @@ def user_login(request):
                 # If the account is valid and active, we can log the user in.
                 # We'll send the user back to the homepage.
                 login(request, user)
-                return HttpResponseRedirect('/chef/')
+                return HttpResponseRedirect('/userprofilepage/')
             else:
                 # An inactive account was used - no logging in!
                 return HttpResponse("Your chef account is disabled.")
@@ -159,6 +160,27 @@ def mainpage(request):
     return render(request, 'mainpage.html')
 
 def add_a_new_job(request):
+    if request.POST:
+        rawdate=request.POST['job_date']
+        print rawdate
+        parts=rawdate.split('/')
+        cooked=[parts[2], parts[0], parts[1]]
+        cooked="-".join(cooked)
+        print cooked
+        d=parse_date(cooked)
+        print d
+        job=PostNewJob()
+        job.name_of_job=request.POST['job_name']
+        job.restaurant_name=request.POST['restaurant_name']
+        job.contact_name=request.POST['contact_name']
+        job.date= d
+        job.number_of_hours=int(request.POST['number_of_hours'])
+        job.pay=int(request.POST['pay'])
+        job.start_time=int(request.POST['start_time'])
+        job.job_description=request.POST['job_description']
+        job.poster=request.user
+        job.save()
+        redirect('jobs_pending')
     return render(request, 'add_a_new_job.html')
 
 def buy_credit(request):
@@ -183,7 +205,8 @@ def previous_jobs_user(request):
     return render (request, 'previous_jobs_user.html')
 
 def jobs_board(request):
-    return render (request, 'jobs_board.html')
+    jobs=PostNewJob.objects.all()
+    return render(request, 'jobs_board.html', {'jobs':jobs})
 
 
 def edit_settings_restaurant(request):

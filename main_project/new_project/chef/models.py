@@ -102,9 +102,10 @@ class UserType(models.Model):
     def __str__(self):
         return self.name
 
+
 class PostNewJob(models.Model):
     name_of_job = models.CharField(max_length=255)
-    User_type_required = models.ForeignKey(UserType)
+    poster = models.ForeignKey(User)
     date = models.DateTimeField()
     pay = models.IntegerField()
     number_of_hours = models.IntegerField()

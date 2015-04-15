@@ -20,11 +20,22 @@
     </div>
     <div id="postform">
             <h1>Post a new job</h1>
-            <form>
+            <form method="POST" >
+            {% csrf_token %}
                 <frameset id="frame">
                     <label>
                         <div> Name of Job: </div>
-                        <textarea style="width: 300px; height: 200px name="job_name" type="text"></textarea>
+                        <textarea style="width: 300px; height: 50px" name="job_name" type="text"></textarea>
+                    </label>
+                        <br>
+                        <label>
+                        <div> Name of Restaurant: </div>
+                        <textarea style="width: 300px; height: 50px" name="restaurant_name" type="text"></textarea>
+                    </label>
+                        <br>
+                        <label>
+                        <div> Contact Name: </div>
+                        <textarea style="width: 300px; height: 50px" name="contact_name" type="text"></textarea>
                     </label>
                         <br>
                     <label>
@@ -37,12 +48,17 @@
                     <br>
                     <label>
                         <div> Date of Job: </div>
-                        <input name="job_date" type="date" id="datepicker">
+                        <input name="job_date" type="text" id="datepicker">
                     </label>
                     <br>
                     <label>
                        <div> Number of hours required (4 hours minimium): </div>
                         <input name="number_of_hours" type="number" value="4" min="4">
+                    </label>
+                    <br>
+                    <label>
+                       <div> Pay per hour: </div>
+                        <input name="pay" type="number" min="10">
                     </label>
                     <br>
                     <label>
@@ -52,14 +68,17 @@
                     <br>
                     <label>
                         <div> Description of Job in 100 words: </div>
-                        <textarea style="width: 300px; height: 300px name="job_description" type="text" min="10" max="100"></textarea>
+                        <textarea style="width: 300px; height: 50px" name="job_description" type="text" min="10" max="100"></textarea>
                     </label>
                 </frameset>
+                <div><h2><input type="submit" name="submit" value="Post this job"></h2></div>
             </form>
-           <div><h2><input type="submit" name="submit" value="Post this job"></h2></div>
+
     <script>
   $(function() {
-    $( "#datepicker" ).datepicker();
+    $( "#datepicker" ).datepicker({
+    altFormat: "yyyy-mm-dd"
+    });
   });
   </script>
 

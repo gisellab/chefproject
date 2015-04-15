@@ -2,7 +2,7 @@
 
 {% block page_subtitle %}Jobs Board{% endblock %}
 
-{% block content %}
+{% block menu %}
 
     <div id="headbar">
 
@@ -17,4 +17,14 @@
         {% endblock %}
     </div>
 
+{% endblock %}
+
+{% block content %}
+{% for j in jobs %}
+<div class="job_tile">
+{{ j.name_of_job }}
+{{j.job_date }}
+{{j.job_description}}
+</div>
+{% endfor %}
 {% endblock %}
