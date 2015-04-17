@@ -20,11 +20,16 @@
 {% endblock %}
 
 {% block content %}
+<div>
 {% for j in jobs %}
+
 <div class="job_tile">
-{{ j.name_of_job }}
-{{j.job_date }}
-{{j.job_description}}
+{{ j.name_of_job }}<br>
+{{ j.date_of_job }}<br>
+{{ j.type_of_worker }}<br>
+{{ j.description }}<br>
+{#<a href="/apply_for_a_new_job/{{ j.id }}/">Apply</a>#}
 </div>
 {% endfor %}
+</div>
 {% endblock %}

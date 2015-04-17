@@ -3,7 +3,8 @@ body {
     box-sizing: border-box;
     margin: 0;
     padding: 0 0 100px 100px;
-    font-family: Copperplate, sans-serif;
+    font-family: Lucida Console, monospace;
+    background-color: #FFBE65;
 }
 
 a {
@@ -30,7 +31,7 @@ a:link {
     background-color: #B27623;
     color: white;
     position: top;
-    height: 200px;
+    height: 180px;
 }
 
 #title {
@@ -41,17 +42,19 @@ a:link {
 }
 
 #nav {
-    line-height: 20px;
+    line-height: 15px;
     background-color: #2E80B2;
     color: white;
     height: 100%;
-    width: 100px;
+    width: 60px;
     display: inline-block;
     text-align: center;
-    padding: 0px 0 15px 0;
+    padding: 0px 0 0px 0;
     position: fixed;
     left: 0;
     top: 0;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
 }
 
 #content {
@@ -74,7 +77,7 @@ a:link {
     height: 100px;
     margin: 10px 0 0 0;
     width: 100%;
-    position: relative;
+    position: absolute;
 }
 
 #mainimage {
@@ -103,36 +106,50 @@ a:link {
     /*top:0;*/
 }
 
+#footerfour {
+    position: absolute;
+    padding: 2px;
+    height: 50px;
+    width: 200px;
+    right: 0;
+}
+
 #headbar {
-    line-height: 20px;
+    line-height: 15px;
     width: 100%;
     color: white;
     top: 0;
     right: 0;
     bottom:20px;
-    text-align: right;
+    text-align: center;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
 }
 
 #headbar a.button {
     display: inline-block;
-    margin: 0;
+    /*margin: 0 10px 0 0;*/
 }
 
 #postform {
     display: inline-block;
-    margin: 0 0 0 20px;
+    margin: 40px;
     width: 800px;
+    background-color: rgba(0,0,0,.2);
+    padding: 30px;
     /*margin: 100px 0 0 0;*/
 }
 
 #postform label div {
     width:400px;
     display:inline-block;
+    background-color: rgba(0,0,0,.5);;
 }
 
 #postform form div {
     width:400px;
     display:inline-block;
+    background-color: transparent;
 }
 
 
@@ -169,8 +186,21 @@ p {
 }
 
 .job_tile {
-    height:200px;
-    width:200px;
-    background-color: #65C4FF;
+    /*height:200px;*/
+    background-color: #FFBE65;
     display:inline-block;
+    vertical-align: top;
+    border-style: solid;
+	padding: 14px;
+	border-width: 3px;
+	color: #B27623;
+	height: 130px;
+	list-style-type: none;
+	margin: 10px;
+	position: relative;
+	text-align: center;
+	width: 150px;
+	/*border-radius: 100px;*/
+	box-shadow: 10px 10px 5px #888888;
+
 }

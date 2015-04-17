@@ -10,6 +10,7 @@
             <a href="{% url 'jobs_pending' %}" class="button">Jobs Pending</a>
             <a href="{% url 'add_a_new_job' %}" class="button">Add New Job</a>
             <a href="{% url 'buy_credit' %}" class="button">Buy Credit</a>
+            <a href="{% url 'Inbox' %}" class="button">Inbox</a>
             <a href="{% url 'previous_jobs' %}" class="button">Previous Jobs</a>
 
     </div>
@@ -25,19 +26,24 @@
                 <frameset id="frame">
                     <label>
                         <div> Name of Job: </div>
-                        <textarea style="width: 300px; height: 50px" name="job_name" type="text"></textarea>
+                        <textarea style="width: 300px; height: 30px" name="job_name" type="text"></textarea>
                     </label>
                         <br>
                         <label>
                         <div> Name of Restaurant: </div>
-                        <textarea style="width: 300px; height: 50px" name="restaurant_name" type="text"></textarea>
+                        <textarea style="width: 300px; height: 30px" name="restaurant_name" type="text"></textarea>
                     </label>
                         <br>
                         <label>
                         <div> Contact Name: </div>
-                        <textarea style="width: 300px; height: 50px" name="contact_name" type="text"></textarea>
+                        <textarea style="width: 300px; height: 30px" name="contact_name" type="text"></textarea>
                     </label>
                         <br>
+                         <label>
+                        <div> Contact Telephone number: </div>
+                        <input name="contact_number" type="integer">
+                    </label>
+                    <br>
                     <label>
                         <div> Type of Worker Required: </div>
                         <input type="radio" name="Worker">Chef
@@ -52,23 +58,25 @@
                     </label>
                     <br>
                     <label>
-                       <div> Number of hours required (4 hours minimium): </div>
+                       <div> Number of hours required (4 hours min): </div>
                         <input name="number_of_hours" type="number" value="4" min="4">
                     </label>
                     <br>
                     <label>
-                       <div> Pay per hour: </div>
-                        <input name="pay" type="number" min="10">
+                       <div> Pay per hour(starting at $10.00): </div>
+                        <input name="pay_per_hour" type="number" min="10">
                     </label>
                     <br>
                     <label>
-                        <div> Start time required: </div>
+                        <div> Start time required (specify AM or PM): </div>
                         <input name="start_time" type="time" value="4">
+                        <input name="morningeveningtime" type="radio">AM
+                        <input name="morningeveningtime" type="radio">PM
                     </label>
                     <br>
                     <label>
                         <div> Description of Job in 100 words: </div>
-                        <textarea style="width: 300px; height: 50px" name="job_description" type="text" min="10" max="100"></textarea>
+                        <textarea style="width: 300px; height: 30px" name="job_description" type="text" min="10" max="100"></textarea>
                     </label>
                 </frameset>
                 <div><h2><input type="submit" name="submit" value="Post this job"></h2></div>

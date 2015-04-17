@@ -70,6 +70,7 @@ class UserWorker(models.Model):
     def __unicode__(self):
         return self.email
 
+
 class NewUserProfile(models.Model):
     # auth_user = models.OnetoOneField(User, primary_key = True)
     name = models.CharField(max_length=255)
@@ -83,6 +84,7 @@ class NewUserProfile(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 class NewRestaurantProfile(models.Model):
     Name_Restaurant = models.CharField(max_length=255)
@@ -103,15 +105,71 @@ class UserType(models.Model):
         return self.name
 
 
+# class JobPoster(models.Model):
+#     name = models.CharField(max_length=255)
+#
+#     def __unicode__(self):
+#         return self.name
+
+
 class PostNewJob(models.Model):
-    name_of_job = models.CharField(max_length=255)
+    name_of_job = models.CharField(max_length=100)
+    restaurant_name = models.CharField(max_length=100)
+    contact_name = models.CharField(max_length=100)
+    contact_telephone = models.IntegerField()
     poster = models.ForeignKey(User)
-    date = models.DateTimeField()
-    pay = models.IntegerField()
+    date_of_job = models.CharField(max_length=255)
+    pay_per_hour = models.IntegerField()
     number_of_hours = models.IntegerField()
+    start_time = models.IntegerField()
+    description = models.CharField(max_length=150)
 
     def __unicode__(self):
         return self.name_of_job
+
+
+class ApplyForJob(models.Model):
+    job = models.ForeignKey(PostNewJob)
+    applicant = models.ForeignKey(User)
+    date_applied = models.DateField(auto_now=True)
+
+    def __unicode__(self):
+        return self.new_job_posting
+
+
+class Message(models.Model):
+    subject = models.CharField(max_length=150)
+    body = models.CharField(max_length=300)
+    from_user = models.ForeignKey(User)
+    to_user = models.ForeignKey(User,null=True, related_name='+')
+    job = models.ForeignKey(PostNewJob)
+
+    def __unicode__(self):
+        return self.subject
+
+
+
+# class UserMessage(models.Model):
+#     subject = models.CharField(max_length=150)
+#     body = models.CharField(max_length=300)
+#     user = models.ForeignKey(User)
+#     job = models.ForeignKey(JobPoster)
+#
+#     def __unicode__(self):
+#         return self.user
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -5,8 +5,9 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from chef.models import PostNewJob
+from chef.models import PostNewJob, ApplyForJob, Message
 from django.utils.dateparse import parse_date
+
 
 def register(request):
     # A boolean value for telling the template whether the registration was successful.
@@ -159,54 +160,71 @@ def about(request):
 def mainpage(request):
     return render(request, 'mainpage.html')
 
+
 def add_a_new_job(request):
     if request.POST:
-        rawdate=request.POST['job_date']
-        print rawdate
-        parts=rawdate.split('/')
-        cooked=[parts[2], parts[0], parts[1]]
-        cooked="-".join(cooked)
-        print cooked
-        d=parse_date(cooked)
-        print d
-        job=PostNewJob()
-        job.name_of_job=request.POST['job_name']
-        job.restaurant_name=request.POST['restaurant_name']
-        job.contact_name=request.POST['contact_name']
-        job.date= d
-        job.number_of_hours=int(request.POST['number_of_hours'])
-        job.pay=int(request.POST['pay'])
-        job.start_time=int(request.POST['start_time'])
-        job.job_description=request.POST['job_description']
-        job.poster=request.user
+        rawdate = request.POST['job_date']
+        print "rawdate", rawdate
+        parts = rawdate.split('/')
+        cooked = [parts[2], parts[0], parts[1]]
+        cooked = "-".join(cooked)
+        print "cooked", cooked
+        d = parse_date(cooked)
+        print "d", type(str(d))
+        job = PostNewJob()
+        job.name_of_job = request.POST['job_name']
+        job.restaurant_name = request.POST['restaurant_name']
+        job.contact_telephone = int(request.POST['contact_number'])
+        # job.type_of_worker=request.POST['type_of_worker']
+        job.contact_name = request.POST['contact_name']
+        job.date_of_job = str(d)
+        job.number_of_hours = int(request.POST['number_of_hours'])
+        job.pay_per_hour = int(request.POST['pay_per_hour'])
+        job.start_time = int(request.POST['start_time'])
+        job.description = request.POST['job_description']
+        job.poster = request.user
         job.save()
-        redirect('jobs_pending')
+        context_dict = {'boldmessage': "Thanks for posting your new job"}
+        return render(request, 'jobs_board.html')
     return render(request, 'add_a_new_job.html')
+
 
 def buy_credit(request):
     return render(request, 'buy_credit.html')
 
+
 def jobs_pending(request):
     return render(request, 'jobs_pending.html')
+
 
 def previous_jobs(request):
     return render(request, 'previous_jobs.html')
 
+
 def buy_credit_user(request):
     return render(request, 'buy_credit_user.html')
+
 
 def jobs_pending_user(request):
     return render(request, 'jobs_pending_user.html')
 
-def apply_for_a_new_job(request):
-    return render(request, 'apply_for_a_new_job.html')
+
+def apply_for_a_new_job(request, job_id):
+    a = ApplyForJob()
+    a.applicant = request.user
+    j = PostNewJob.objects.get(job_id)
+    a.job = j
+    a.save()
+    return render(request, 'apply_for_a_new_job.html', {"job": j})
+
 
 def previous_jobs_user(request):
-    return render (request, 'previous_jobs_user.html')
+    return render(request, 'previous_jobs_user.html')
+
 
 def jobs_board(request):
-    jobs=PostNewJob.objects.all()
-    return render(request, 'jobs_board.html', {'jobs':jobs})
+    jobs = PostNewJob.objects.all()
+    return render(request, 'jobs_board.html', {'jobs': jobs})
 
 
 def edit_settings_restaurant(request):
@@ -238,7 +256,7 @@ def facts_page(request):
 
 def userprofilepage(request):
     # if request.method == 'POST':
-    #     form = NewUserProfileForm
+    # form = NewUserProfileForm
     #     if form.is_valid():
     #         form.save()
     # else:
@@ -256,3 +274,18 @@ def restaurantprofilepage(request):
         form = NewRestaurantProfileForm
     context_dict = {'form': form}
     return render(request, 'restaurantprofilepage.html', context_dict)
+
+
+def inbox(request):
+    # if request.method == 'POST':
+    # rawdate=request.POST['']
+    return render(request, 'inbox.html')
+
+def read_message(request):
+    return render(request, 'read_message.html')
+
+def send_message(request):
+    return render(request, 'send_message.html')
+
+
+

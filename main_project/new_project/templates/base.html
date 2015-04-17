@@ -2,15 +2,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+{#    <script src="/static/js/jquery.scrolly.min.js"></script>#}
+{#    <script src="/static/js/jquery.dropotron.min.js"></script>#}
+{#	<script src="/static/js/jquery.scrollex.min.js"></script>#}
+{#	<script src="/static/js/skel.min.js"></script>#}
+{#	<script src="/static/js/skel-layers.min.js"></script>#}
+{#	<script src="/static/js/init.js"></script>#}
     <link rel="stylesheet" href="/static/styles/styles.css"/>
+{#    <link rel="stylesheet" href="/static/styles/skel.css" />#}
+{#	<link rel="stylesheet" href="/static/styles/style.css" />#}
+{#	<link rel="stylesheet" href="/static/styles/style-xlarge.css" />#}
     <title>{% block title %}Chef{% endblock %}</title>
-<meta charset="utf-8">
+    <meta charset="utf-8">
   <title>jQuery UI Datepicker - Default functionality</title>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery.scrolly.min.js"></script>
   <link rel="stylesheet" href="/resources/demos/styles.css">
-
 </head>
 <body>
 
@@ -18,13 +28,13 @@
     <div id="logo">
     </div>
     <div id="title">
-        <h1>{% block page_title %}Guest Chef{% endblock %}</h1>
+        <h1>{% block page_title %}Short Staffed PDX{% endblock %}</h1>
 
         <h2> {% block page_subtitle %}Connecting Restaurants with temporary staff{% endblock %}</h2>
         {% if user.is_authenticated %}
-            <h2>Guest Chef says... hello {{ user.username }}!</h2>
+            <h2>Hello {{ user.username }}!</h2>
         {% else %}
-            <h2>Guest Chef says... hello!</h2>
+            <h2>Hello to you</h2>
         {% endif %}
     </div>
 </div>
@@ -39,6 +49,7 @@
 
             <h3><a href="{% url 'register' %}">Register Here</a></h3><br>
         {% endif %}
+
         <h3><a href="{% url 'facts_page' %}">Facts Page</a></h3><br>
 
         <h3><a href="{% url 'contact_us' %}">Contact us</a></h3><br>
@@ -54,12 +65,12 @@
 {% block menu %}{% endblock %}
     <div id="mainimage"><img src="{% static "images/chefimage.jpg" %}" alt="Picture of Restaurant staff"/></div>
 
-    <h2> {% block page_name %}{% endblock %}</h2>
+{#    <h2> {% block page_name %}{% endblock %}</h2>#}
 {% block content %}
 
 
 
-<p>Date: <input type="text" id="datepicker"></p>
+{#<p>Date: <input type="text" id="datepicker"></p>#}
 
 {% endblock %}
 </div>
@@ -69,6 +80,9 @@
     </div>
     <div id="footerthree">
         Twitter
+    </div>
+  <div id = "footerfour>"
+    <a href="https://twitter.com/mimosa_deli" class="twitter-follow-button" data-show-count="false">Follow @ShortStaffed</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     </div>
 </div>
 

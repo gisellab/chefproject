@@ -29,11 +29,14 @@ urlpatterns = patterns('',
                        url(r'^buy_credit', 'chef.views.buy_credit', name='buy_credit'),
                        url(r'^previous_jobs/', 'chef.views.previous_jobs', name='previous_jobs'),
                        url(r'^edit_settings_user/', 'chef.views.edit_settings_user', name='edit_settings_user'),
-                       url(r'^apply_for_a_new_job/', 'chef.views.apply_for_a_new_job', name='apply_for_a_new_job'),
+                       url(r'^apply_for_a_new_job/(?P<job_id>\d+)/', 'chef.views.apply_for_a_new_job', name='apply_for_a_new_job'),
                        url(r'^buy_credit_user/', 'chef.views.buy_credit_user', name='buy_credit_user'),
                        url(r'^previous_jobs_user/', 'chef.views.previous_jobs_user', name='previous_jobs_user'),
                        url(r'^jobs_board/', 'chef.views.jobs_board', name='jobs_board'),
                        url(r'^jobs_pending_user/', 'chef.views.jobs_pending_user', name='jobs_pending_user'),
+                       url(r'^inbox/', 'chef.views.inbox', name='inbox'),
+                       url(r'^read_message/', 'chef.views.read_message', name='read_message'),
+                       url(r'^send_message/', 'chef.views.send_message', name='send_message'),
                        )
 
 if not settings.DEBUG:
