@@ -5,9 +5,9 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from chef.models import PostNewJob, ApplyForJob, Message
+from django.contrib.auth.models import User
+from chef.models import PostNewJob, Applicant, Message, UserProfile, UserType, NewRestaurantProfile, NewUserProfile
 from django.utils.dateparse import parse_date
-
 
 def register(request):
     # A boolean value for telling the template whether the registration was successful.
@@ -75,11 +75,9 @@ def user_logout(request):
     # Take the user back to the homepage.
     return HttpResponseRedirect('/chef/')
 
-
 @login_required
 def restricted(request):
     return HttpResponse("Since you're logged in, you can see this text!")
-
 
 def user_login(request):
     # If the request is a HTTP POST, try to pull out the relevant information.
@@ -105,7 +103,7 @@ def user_login(request):
                 # If the account is valid and active, we can log the user in.
                 # We'll send the user back to the homepage.
                 login(request, user)
-                return HttpResponseRedirect('/userprofilepage/')
+                return HttpResponseRedirect('/userprofilepage/' + str(user.id))
             else:
                 # An inactive account was used - no logging in!
                 return HttpResponse("Your chef account is disabled.")
@@ -119,8 +117,7 @@ def user_login(request):
     else:
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
-        return render(request, 'chef/login.html', {})
-
+        return render(request, 'login.html', {})
 
 def new_restaurant_user(request):
     if request.method == 'POST':
@@ -132,7 +129,6 @@ def new_restaurant_user(request):
     context_dict = {'form': form}
     return render(request, 'new_restaurant_user.html', context_dict)
 
-
 def new_worker_user(request):
     if request.method == 'POST':
         form = NewUserWorkerForm
@@ -143,23 +139,37 @@ def new_worker_user(request):
     context_dict = {'form': form}
     return render(request, 'new_worker_user.html', context_dict)
 
-
 def index(request):
     context_dict = {'boldmessage': "I am bold font from the context"}
     return render(request, 'mainpage.html', context_dict)
 
-
 def contact_us(request):
     return render(request, "contact_us.html")
 
+def register_restaurant(request):
+    if request.POST:
+        u = User.objects.create_user(request.POST['name'], email=request.POST['email'], password=request.POST['password'])
+        p = UserProfile(user=u)
+        p.type = UserType.objects.filter(name='restaurant')[0]
+        p.save()
+        return render(request, 'mainpage.html')
+    return render(request, "register_restaurant.html")
+
+def register_user(request):
+    if request.POST:
+        u = User.objects.create_user(request.POST['name'], email=request.POST['email'], password=request.POST['password'])
+        p = UserProfile(user=u)
+        p.type = UserType.objects.filter(name='user')[0]
+        p.save()
+        print request.POST
+        return redirect('/chef/userprofilepageview/(?P<poster_id>\d+)')
+    return render(request, 'register_user')
 
 def about(request):
     return HttpResponse("<br/> <a href='/about'>About</a>Guest Chef say this is the about page")
 
-
 def mainpage(request):
     return render(request, 'mainpage.html')
-
 
 def add_a_new_job(request):
     if request.POST:
@@ -172,7 +182,7 @@ def add_a_new_job(request):
         d = parse_date(cooked)
         print "d", type(str(d))
         job = PostNewJob()
-        job.name_of_job = request.POST['job_name']
+        job.name_of_job = request.POST['name_of_job']
         job.restaurant_name = request.POST['restaurant_name']
         job.contact_telephone = int(request.POST['contact_number'])
         # job.type_of_worker=request.POST['type_of_worker']
@@ -181,100 +191,105 @@ def add_a_new_job(request):
         job.number_of_hours = int(request.POST['number_of_hours'])
         job.pay_per_hour = int(request.POST['pay_per_hour'])
         job.start_time = int(request.POST['start_time'])
-        job.description = request.POST['job_description']
+        job.description = request.POST['description']
+        job.type = request.POST['type']
         job.poster = request.user
         job.save()
         context_dict = {'boldmessage': "Thanks for posting your new job"}
-        return render(request, 'jobs_board.html')
+        return HttpResponseRedirect('/jobs_board/')
     return render(request, 'add_a_new_job.html')
-
 
 def buy_credit(request):
     return render(request, 'buy_credit.html')
 
+def jobs_pending_user(request):
+    # p = PostNewJob()
+    # p.applicant = request.user
+    # j = PostNewJob.objects.filter(id=job_id)
+    # p.job = j
+    # p.save()
+    return render(request, 'jobs_pending_user.html', {'applications': Applicant.objects.filter(applicant=request.user)})
 
-def jobs_pending(request):
+def job_applied(request):
+    p = PostNewJob()
+    p.applicant = request.user
     return render(request, 'jobs_pending.html')
 
+def jobs_pending(request):
+    return render(request, 'jobs_pending.html', {'applications': Applicant.objects.filter(job__poster=request.user)})
 
 def previous_jobs(request):
     return render(request, 'previous_jobs.html')
 
-
 def buy_credit_user(request):
     return render(request, 'buy_credit_user.html')
 
-
-def jobs_pending_user(request):
-    return render(request, 'jobs_pending_user.html')
-
-
 def apply_for_a_new_job(request, job_id):
-    a = ApplyForJob()
+    a = Applicant()
     a.applicant = request.user
-    j = PostNewJob.objects.get(job_id)
+    j = PostNewJob.objects.get(id=job_id)
     a.job = j
     a.save()
-    return render(request, 'apply_for_a_new_job.html', {"job": j})
-
+    return redirect('jobs_pending_user')
+    # return render(request, 'apply_for_a_new_job.html', {"job": j})
 
 def previous_jobs_user(request):
     return render(request, 'previous_jobs_user.html')
-
 
 def jobs_board(request):
     jobs = PostNewJob.objects.all()
     return render(request, 'jobs_board.html', {'jobs': jobs})
 
-
 def edit_settings_restaurant(request):
-    if request.method == 'POST':
-        form = NewUserProfileForm
-        if form.is_valid():
-            form.save()
-
-    else:
-        form = NewUserProfileForm
-        context_dict = {'form': form}
-    return render(request, 'edit_settings_restaurant.html', context_dict)
-
+    if request.POST:
+        profile = NewRestaurantProfile()
+        profile.profile = request.user
+        profile.Name_Restaurant= request.POST['Name_Restaurant']
+        profile.restaurant_address = request.POST['restaurant_address']
+        profile.Main_contact_name = request.POST['main_contact_name']
+        profile.contact_number = request.POST['contact_number']
+        profile.contact_email = request.POST['contact_email']
+        profile.food_style = request.POST['food_style']
+        profile.Signature_dish = request.POST['signature_dish']
+        profile.save()
+        return HttpResponseRedirect('/restaurantprofilepage/')
+    return render(request, 'edit_settings_restaurant.html', {'user':request.user})
 
 def edit_settings_user(request):
-    if request.method == 'POST':
-        form = NewUserProfileForm
-        if form.is_valid():
-            form.save()
-    else:
-        form = NewUserProfileForm
-    context_dict = {'form': form}
-    return render(request, 'edit_settings_user.html', context_dict)
-
+    if request.POST:
+        profile = NewUserProfile()
+        profile.profile = request.user
+        profile.name = request.POST['name']
+        profile.job_description = request.POST['job_description']
+        profile.previous_restaurants = request.POST['previous_restaurants']
+        profile.job_titles_held = request.POST['job_titles_held']
+        profile.years = request.POST['years']
+        profile.about_me = request.POST['about_me']
+        profile.profile_picture = request.POST['profile_picture']
+        profile.save()
+        return HttpResponseRedirect('/userprofilepage/')
+    return render(request, 'edit_settings_user.html', )
 
 def facts_page(request):
     return render(request, 'facts_page.html')
 
+def userprofilepage(request, user_id):
+    user = User.objects.get(id= user_id)
+    return render(request, 'userprofilepage.html', {"user":user})
 
-def userprofilepage(request):
-    # if request.method == 'POST':
-    # form = NewUserProfileForm
-    #     if form.is_valid():
-    #         form.save()
-    # else:
-    #     form = NewUserProfileForm
-    # context_dict = {'form': form}
-    return render(request, 'userprofilepage.html')
+def restaurantprofilepage(request, user_id):
+    poster = User.objects.get(id= user_id)
+    return render(request, 'restaurantprofilepage.html', {"poster":poster})
 
+def userprofilepageview(request, user_id):
+    j = User.objects.get(id=user_id)
+    print j
+    return render(request, 'userprofilepageview.html', {"user": j})
 
-def restaurantprofilepage(request):
-    if request.method == 'POST':
-        form = NewRestaurantProfileForm
-        if form.is_valid():
-            form.save()
-    else:
-        form = NewRestaurantProfileForm
-    context_dict = {'form': form}
-    return render(request, 'restaurantprofilepage.html', context_dict)
-
+def restaurantprofilepageview(request, poster_id):
+    j = User.objects.get(id=poster_id)
+    print j
+    return render(request, 'restaurantprofilepageview.html', {"restaurant": j})
 
 def inbox(request):
     # if request.method == 'POST':

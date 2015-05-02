@@ -5,38 +5,54 @@
 {% block menu %}
 
     <div id="headbar">
+
+        {% block horizontalbar %}
             <a href="{% url 'restaurantprofilepage' %}" class="button">Profile Page</a>
             <a href="{% url 'edit_settings_restaurant' %}" class="button">Edit Settings</a>
             <a href="{% url 'jobs_pending' %}" class="button">Jobs Pending</a>
             <a href="{% url 'add_a_new_job' %}" class="button">Add New Job</a>
+            <a href="{% url 'inbox' %}" class="button">Inbox</a>
             <a href="{% url 'buy_credit' %}" class="button">Buy Credit</a>
-            <a href="{% url 'Inbox' %}" class="button">Inbox</a>
             <a href="{% url 'previous_jobs' %}" class="button">Previous Jobs</a>
 
-    </div>
-
-{% endblock %}
+        {% endblock %}
+  </div>
+  {% endblock %}
 
 {% block content %}
-    </div>
+<div class = "inner"></div>
     <div id="postform">
-            <h1>Post a new job</h1>
-            <form method="POST" >
+            <h1><center>Post a new job</center></h1>
+            <form action="/add_a_new_job/" method="POST" id="frame">
             {% csrf_token %}
-                <frameset id="frame">
                     <label>
                         <div> Name of Job: </div>
-                        <textarea style="width: 300px; height: 30px" name="job_name" type="text"></textarea>
+                        <textarea style="width: 200px; height: 30px" name="name_of_job" type="text"></textarea>
                     </label>
                         <br>
                         <label>
                         <div> Name of Restaurant: </div>
-                        <textarea style="width: 300px; height: 30px" name="restaurant_name" type="text"></textarea>
+                        <textarea style="width: 200px; height: 30px" name="restaurant_name" type="text"></textarea>
                     </label>
                         <br>
                         <label>
+                        <div> Area of Portland: </div>
+                        <textarea style="width: 200px; height: 30px" name="area_of_portland" type="text"></textarea>
+{#                        <input type="radio" name="Area">Downtown#}
+{#                        <input type="radio" name="Area">The Pearl#}
+{#                        <input type="radio" name="Area">North West#}
+{#                        <input type="radio" name="Worker">Beaverton#}
+{#                        <input type="radio" name="Worker">Hillsdale#}
+{#                        <input type="radio" name="Area">Inner South East#}
+{#                        <input type="radio" name="Area">South East#}
+{#                        <input type="radio" name="Worker">Tigard#}
+{#                        <input type="radio" name="Worker">Beaverton#}
+{#                        <input type="radio" name="Worker">North East#}
+{#                        <input type="radio" name="Worker">#}
+                    </label>
+                        <br>
                         <div> Contact Name: </div>
-                        <textarea style="width: 300px; height: 30px" name="contact_name" type="text"></textarea>
+                        <textarea style="width: 200px; height: 30px" name="contact_name" type="text"></textarea>
                     </label>
                         <br>
                          <label>
@@ -46,10 +62,10 @@
                     <br>
                     <label>
                         <div> Type of Worker Required: </div>
-                        <input type="radio" name="Worker">Chef
-                        <input type="radio" name="Worker">Bartender
-                        <input type="radio" name="Worker">Server
-                        <input type="radio" name="Worker">Dishwasher
+                        <input type="radio" name="type">Chef
+                        <input type="radio" name="type">Bartender
+                        <input type="radio" name="type">Server
+                        <input type="radio" name="type">Dishwasher
                     </label>
                     <br>
                     <label>
@@ -69,28 +85,30 @@
                     <br>
                     <label>
                         <div> Start time required (specify AM or PM): </div>
-                        <input name="start_time" type="time" value="4">
+                        <input name="start_time" type="number">
                         <input name="morningeveningtime" type="radio">AM
                         <input name="morningeveningtime" type="radio">PM
                     </label>
                     <br>
                     <label>
                         <div> Description of Job in 100 words: </div>
-                        <textarea style="width: 300px; height: 30px" name="job_description" type="text" min="10" max="100"></textarea>
+                        <textarea style="width: 200px; height: 60px" name="description" type="text" min="10" max="100"></textarea>
                     </label>
-                </frameset>
-                <div><h2><input type="submit" name="submit" value="Post this job"></h2></div>
+                <div><h1><input style= "width: 100px; height:40px" type="submit" name="submit" value="POST THIS JOB"></h1></div>
             </form>
 
     <script>
   $(function() {
-    $( "#datepicker" ).datepicker({
+    var dp = $( "#datepicker" );
+    console.log(dp);
+    console.log($());
+    dp.datepicker({
     altFormat: "yyyy-mm-dd"
     });
   });
   </script>
-
         {% endblock %}
     </div>
+
 
 

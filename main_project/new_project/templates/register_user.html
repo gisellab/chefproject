@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block page_subtitle %} Register with Short Staffed {% endblock %}
+
+{% block content %}
+
+    <div id="postform">
+            <h1>Register as a new User</h1>
+            <form method="POST" >
+            {% csrf_token %}
+                <frameset id="frame">
+                    <label>
+                        <div> Name: </div>
+                        <textarea style="width: 300px; height: 30px" name="name" type="text"></textarea>
+                    </label>
+                        <br>
+                        <label>
+                        <div> Password: </div>
+                        <input style="width: 300px; height: 30px" name="password" type="password">
+                    </label>
+                        <br>
+                        <label>
+                        <div> Email Address: </div>
+                        <input style="width: 300px; height: 30px" name="email" type="email">
+                    </label>
+                    <br>
+                    <label>
+                        <div> I am a : </div>
+                        <input type="radio" name="Worker">Chef
+                        <input type="radio" name="Worker">Bartender
+                        <input type="radio" name="Worker">Server
+                        <input type="radio" name="Worker">Dishwasher
+                    </label>
+                </frameset>
+                <div><center><h1><input type="submit" name="submit" value="Register with Short Staffed"></h1></center></div>
+            </form>
+{% endblock %}

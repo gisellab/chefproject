@@ -2,89 +2,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-{#    <script src="/static/js/jquery.scrolly.min.js"></script>#}
-{#    <script src="/static/js/jquery.dropotron.min.js"></script>#}
-{#	<script src="/static/js/jquery.scrollex.min.js"></script>#}
-{#	<script src="/static/js/skel.min.js"></script>#}
-{#	<script src="/static/js/skel-layers.min.js"></script>#}
-{#	<script src="/static/js/init.js"></script>#}
+
     <link rel="stylesheet" href="/static/styles/styles.css"/>
-{#    <link rel="stylesheet" href="/static/styles/skel.css" />#}
-{#	<link rel="stylesheet" href="/static/styles/style.css" />#}
-{#	<link rel="stylesheet" href="/static/styles/style-xlarge.css" />#}
-    <title>{% block title %}Chef{% endblock %}</title>
+    <title></title>
     <meta charset="utf-8">
   <title>jQuery UI Datepicker - Default functionality</title>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery.scrolly.min.js"></script>
-  <link rel="stylesheet" href="/resources/demos/styles.css">
+{#  <script src="{% static 'js/jquery.min.js' %}"></script>#}
+  <script src="{% static 'js/jquery.scrolly.min.js' %}"></script>
 </head>
-<body>
 
-<div id="header">
-    <div id="logo">
-    </div>
-    <div id="title">
-        <h1>{% block page_title %}Short Staffed PDX{% endblock %}</h1>
-
-        <h2> {% block page_subtitle %}Connecting Restaurants with temporary staff{% endblock %}</h2>
+<div class = "outer">
+{#<div style="display: inline-block;">#}
+            <div id="nav">
         {% if user.is_authenticated %}
-            <h2>Hello {{ user.username }}!</h2>
+           <h3><a href="{% url 'logout' %}" class="button">LOGOUT</a></h3><br/>
         {% else %}
-            <h2>Hello to you</h2>
-        {% endif %}
-    </div>
-</div>
-
-<div id="nav">
-
-    {% block sidebar %}
-        {% if user.is_authenticated %}
-            <h3><a href="{% url 'logout' %}">Logout</a></h3><br/>
-        {% else %}
-            <h3><a href= "{% url 'login' %}">Login</a></h3><br>
-
-            <h3><a href="{% url 'register' %}">Register Here</a></h3><br>
+            <h3><a href= "{% url 'login' %}" class="button">LOGIN</a></h3><br>
         {% endif %}
 
-        <h3><a href="{% url 'facts_page' %}">Facts Page</a></h3><br>
+        <h3><a href="{% url 'facts_page' %}"class="button">FAQS PAGE</a></h3><br>
 
-        <h3><a href="{% url 'contact_us' %}">Contact us</a></h3><br>
+        <h3><a href= "{% url 'mainpage' %}"class="button">HOME PAGE </a></h3><br/>
+            </div>
 
-        <h3><a href= "{% url 'mainpage' %}">About </a></h3><br/>
 
-    {% endblock %}
+    <div id ="inner">
+    <div id="header">
+    <div><img src="{% static "images/Untitled design-2.jpg" %}"></div>
+    <div id="transbox">
+    <div class = "transbox p">
+        <h1> Short Staffed PDX </h1>
+        <br>
+        <h3>Connecting restaurants with short term staff</h3>
+        </div>
+            </div>
+
+
+{% block menu %}
+{% block horizontalbar %}
+{#<div id = "headbar">#}
 </div>
-
-<!-- New line -->
-
-<div id="content">
-{% block menu %}{% endblock %}
-    <div id="mainimage"><img src="{% static "images/chefimage.jpg" %}" alt="Picture of Restaurant staff"/></div>
-
-{#    <h2> {% block page_name %}{% endblock %}</h2>#}
-{% block content %}
-
-
-
-{#<p>Date: <input type="text" id="datepicker"></p>#}
-
+<br>
 {% endblock %}
-</div>
-<div id="footer">
-    <div id="footertwo">
-        Copyright © Guest Chef
-    </div>
-    <div id="footerthree">
-        Twitter
-    </div>
-  <div id = "footerfour>"
-    <a href="https://twitter.com/mimosa_deli" class="twitter-follow-button" data-show-count="false">Follow @ShortStaffed</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-    </div>
-</div>
+{% endblock %}
 
-</body>
+<div class="body">{% block content %}{% endblock %}
+{% block cta %}{%  endblock %}
+
+</div>
+</div>
+</div>
+{% block footer %}
+<div id="footer">
+{#    <div class="footerboxes">#}
+{#       <a href="#" class="icon-button twitter"><i class="icon-twitter"></i><span></span></a>#}
+{#       <a href="#" class="icon-button facebook"><i class="icon-facebook"></i><span></span></a>#}
+{#       <a href="#" class="icon-button google-plus"><i class="icon-google-plus"></i><span></span></a>#}
+{#       <a href="#" class="icon-button youtube"><i class="fa fa-youtube"></i><span></span></a>#}
+{#       <a href="#" class="icon-button pinterest"><i class="fa fa-pinterest"></i><span></span></a>#}
+<br>
+
+    <div class="footerboxes">
+        Copyright © Short Staffed
+        <br>
+       <a href="{% url 'contact_us' %}" class="button">CONTACT US </a>
+       <br>
+       <a href="https://twitter.com/mimosa_deli" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @mimosa_deli</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+       <br>
+{#       <a href="https://twitter.com/mimosa_deli' %}"" class="icon-button twitter"><i class="icon-twitter"></i><span></span></a>#}
+{#       <br>#}
+{#       <a href="#" class="icon-button facebook"><i class="icon-facebook"></i><span></span></a>#}
+{#       <br>#}
+{#       <a href="#" class="icon-button google-plus"><i class="icon-google-plus"></i><span></span></a>#}
+
+</div>
+</div>
+{%  endblock %}
+
 </html>

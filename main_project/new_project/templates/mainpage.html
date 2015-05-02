@@ -3,4 +3,13 @@
 {% block page_subtitle %}Welcome to Guest Chef Main Page{% endblock %}
 
 
+ {% block cta %}
+ <div class="cta">
+            <a href="{% url 'register_restaurant' %}" class="button">Register a Restaurant</a>
+            <a href="{% url 'register_user' %}" class="button">Register as a User</a>
+ </div>
+ {% endblock %}
+
+
+
 

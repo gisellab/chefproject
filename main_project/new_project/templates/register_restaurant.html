@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block page_subtitle %}Register A Restaurant{% endblock %}
+
+{% block content %}
+
+    <div id="postform">
+            <h2><center>Register as a new Restaurant</center></h2>
+            <form method="POST" >
+            {% csrf_token %}
+                <frameset id="frame">
+                    <label>
+                        <div> Name: </div>
+                        <textarea style="width: 300px; height: 30px" name="name" type="text"></textarea>
+                    </label>
+                    <br>
+                    <label>
+                        <div> Name of Restaurant: </div>
+                        <textarea style="width: 300px; height: 30px" name="name_of_restaurant" type="text"></textarea>
+                    </label>
+                        <br>
+                        <label>
+                        <div> Password: </div>
+                        <input style="width: 300px; height: 30px" name="password" type="password"></input>
+                        <br>
+                        <br>
+                        <label>
+                        <div> Email Address: </div>
+                        <textarea style="width: 300px; height: 30px" name="email" type="email"></textarea>
+                    </label>
+                    <br>
+                </frameset>
+                <div><h1><center><input type="submit" name="submit" value="Register with Short Staffed"></center></h1></div>
+            </form>
+
+    </script>
+{% endblock %}
+

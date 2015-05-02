@@ -10,7 +10,6 @@ class Category(models.Model):
     def __unicode__(self):  # For Python 2, use __str__ on Python 3
         return self.name
 
-
 class Page(models.Model):
     category = models.ForeignKey(Category)
     title = models.CharField(max_length=128)
@@ -20,11 +19,16 @@ class Page(models.Model):
     def __unicode__(self):  # For Python 2, use __str__ on Python 3
         return self.title
 
+class UserType(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
 
 class UserProfile(models.Model):
     # This line is required. Links UserProfile to a User model instance.
     user = models.OneToOneField(User)
-
+    type = models.ForeignKey(UserType, null=True)
     # The additional attributes we wish to include.
     website = models.URLField(blank=True)
     picture = models.ImageField(upload_to='profile_images', blank=True)
@@ -32,7 +36,6 @@ class UserProfile(models.Model):
     # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):
         return self.user.username
-
 
 class Skill(models.Model):
     Chef = models.CharField(max_length=255)
@@ -43,8 +46,8 @@ class Skill(models.Model):
     def __str__(self):
         return self.Chef
 
-
 class UserRestaurant(models.Model):
+    user= models.ForeignKey(User, null=True, blank=True)
     # auth_user = models.OnetoOneField(User, primary_key=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -57,8 +60,8 @@ class UserRestaurant(models.Model):
     def __unicode__(self):
         return self.email
 
-
 class UserWorker(models.Model):
+    user= models.ForeignKey(User, null=True, blank=True)
     # auth_user = models.OnetoOneField(User, primary_key = True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -70,47 +73,33 @@ class UserWorker(models.Model):
     def __unicode__(self):
         return self.email
 
-
 class NewUserProfile(models.Model):
     # auth_user = models.OnetoOneField(User, primary_key = True)
+    profile = models.ForeignKey(User)
     name = models.CharField(max_length=255)
-    Job_Description = models.CharField(max_length=255)
-    Restaurants_worked = models.CharField(max_length=255)
-    Job_titles_held = models.CharField(max_length=20)
-    Years_in_restaurant_industry = models.IntegerField()
-    About_me = models.TextField(max_length=150)
+    job_description = models.CharField(max_length=255)
+    previous_restaurants = models.CharField(max_length=255)
+    job_titles_held = models.CharField(max_length=20)
+    years = models.IntegerField()
+    about_me = models.TextField(max_length=150)
     Upload_profile_picture = models.ImageField(blank=True, null=True)
-    skill = models.ManyToManyField(Skill)
+    # skill = models.ManyToManyField(Skill)
 
     def __unicode__(self):
         return self.name
 
-
 class NewRestaurantProfile(models.Model):
+    profile = models.ForeignKey(User)
     Name_Restaurant = models.CharField(max_length=255)
-    Restaurant_Description = models.TextField()
-    Food_style = models.TextField()
+    restaurant_address = models.TextField()
     Main_contact_name = models.CharField(max_length=255)
-    About_the_restaurant = models.TextField()
+    contact_number = models.IntegerField()
+    contact_email = models.TextField()
+    food_style = models.TextField()
     Signature_dish = models.CharField(max_length=255)
 
     def __unicode__(self):
         return self.restaurant_name
-
-
-class UserType(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-
-
-# class JobPoster(models.Model):
-#     name = models.CharField(max_length=255)
-#
-#     def __unicode__(self):
-#         return self.name
-
 
 class PostNewJob(models.Model):
     name_of_job = models.CharField(max_length=100)
@@ -123,12 +112,13 @@ class PostNewJob(models.Model):
     number_of_hours = models.IntegerField()
     start_time = models.IntegerField()
     description = models.CharField(max_length=150)
+    type = models.CharField(max_length=10)
 
     def __unicode__(self):
         return self.name_of_job
 
 
-class ApplyForJob(models.Model):
+class Applicant(models.Model):
     job = models.ForeignKey(PostNewJob)
     applicant = models.ForeignKey(User)
     date_applied = models.DateField(auto_now=True)
@@ -146,7 +136,6 @@ class Message(models.Model):
 
     def __unicode__(self):
         return self.subject
-
 
 
 # class UserMessage(models.Model):

@@ -1,36 +1,37 @@
-{% extends "base.html" %}
-{% load crispy_forms_tags %}
+{% extends "chef/../base.html" %}
 
-{% block page_subtitle %}Edit Settings{% endblock %}
+{% block content %}
+        {% if registered %}
+        Guest Chef says: <strong>thank you for registering!</strong>
+        <a href="/chef">Return to the homepage.</a><br />
+        {% else %}
+            <strong>Register here!</strong><br />
 
-{% block menu %}
+        <div id="postform">
+        <form id="user_form" method="post" action="/register/"
+                enctype="multipart/form-data">
 
-    <div id="headbar">
+            {% csrf_token %}
 
-        {% block horizontalbar %}
+            <!-- Display each form. The as_p method wraps each element in a paragraph
+                 (<p>) element. This ensures each element appears on a new line,
+                 making everything look neater. -->
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
 
-            <a href="{% url 'userprofilepage' user.id %}" class="button">Profile Page</a>
-            <a href="{% url 'edit_settings_user' user.id %}" class="button">Edit Settings</a>
-            <a href="{% url 'jobs_board' %}" class="button">Jobs Board</a>
-            <a href="{% url 'inbox' #}" class="button">Inbox</a>
-            <a href="{% url 'jobs_pending_user' %}" class="button">Jobs Pending</a>
+            <!-- Provide a button to click to submit the form. -->
+            <input type="submit" name="submit" value="Register" />
+        </form>
+        </div>
 
-        {% endblock %}
-    </div>
-
-{% endblock %}
-    {% block content %}
-
-
-    </div>
-    <div id="postform">
+         <div id="postform">
             <h1>Fill in your profile</h1>
             <form method="POST" >
             {% csrf_token %}
                 <frameset id="frame">
                     <label>
                         <div> Name: </div>
-                        <textarea style="width: 300px; height: 30px" name="name" type="text"></textarea>
+                        <textarea style="width: 300px; height: 30px" name="first_name" type="text"></textarea>
                     </label>
                         <br>
                         <label>
@@ -50,10 +51,10 @@
                     <br>
                     <label>
                         <div> Number of Years in Industry: </div>
-                        <input type="radio" name="years"> 1-3 Yrs
-                        <input type="radio" name="years">3-5 Yrs
-                        <input type="radio" name="years">5-8 Yrs
-                        <input type="radio" name="years">10+ Yrs
+                        <input type="radio" name="Years"> 1-3 Yrs
+                        <input type="radio" name="Worker">3-5 Yrs
+                        <input type="radio" name="Worker">5-8 Yrs
+                        <input type="radio" name="Worker">10+ Yrs
                     </label>
                     <br>
                     <label>
@@ -61,12 +62,10 @@
                         <textarea style="width: 300px; height: 60px" name="about_me" type="text" maxlength="300"></textarea>
                     </label>
                     <label>
-                        <div> Upload Profile Picture: </div>
-                        <img name="profile_picture" type="image" ></img>
-                    </label>
-                    <label>
+                </frameset>
                 <div><h2><input type="submit" name="submit" value="Update your profile"></h2></div>
             </form>
 
-{% endblock %}
 
+        {% endif %}
+{% endblock %}

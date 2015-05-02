@@ -1,0 +1,228 @@
+
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 0 100px 100px;
+    font-family: Lucida Console, monospace;
+    background-color: whitesmoke;
+}
+
+a {
+    color: darkslategrey;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+#logo {
+    background-color: #65C4FF;
+    /*background-image:  url(/static/images/chef.jpg);*/
+    width: 100px;
+    height: 100px;
+    background-size: 150px 150px;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    margin: 20px;
+}
+
+#header {
+    background-color: #B27623;
+    color: white;
+    position: absolute;
+    top:10px;
+    height: 180px;
+}
+
+#title {
+    display: inline-block;
+    text-align: center;
+    width: calc(100% - 150px);
+    right: 0;
+}
+
+#nav {
+    line-height: 50px;
+    background-color: #2E80B2;
+    color: white;
+    height: 100%;
+    width: 100px;
+    display: inline-block;
+    text-align: center;
+    padding: 0px 0 100px 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    opacity: 0.8;
+    filter: alpha(opacity=50);
+}
+
+#content {
+    background-color: #ffffff;
+    position: relative;
+}
+
+#form {
+    background-color: azure;
+    padding: 100px 0 15px 0;
+    width: 400px;
+    font-size: 20px;
+}
+
+#footer {
+    background-color: #B27623;
+    color: white;
+    text-align: center;
+    padding: 0;
+    height: 150px;
+    margin: 10px 0 0 0;
+    width: calc(100% - 100px);
+}
+
+#mainimage {
+    background-color: white;
+    position:relative;
+    display: inline-block;
+    top: 60px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+#footertwo {
+    padding: 30px;
+    height: 50px;
+    width: 30%;
+}
+
+#footerthree {
+    padding: 20px;
+    height: 50px;
+    width: 30%;
+    /*top:0;*/
+}
+
+#footerfour {
+    padding: 30px;
+    height: 50px;
+    width: 30%;
+}
+
+#headbar {
+    line-height: 1px;
+    width: 100%;
+    color: white;
+    top: 0;
+    right: 0;
+    bottom:20px;
+    text-align: center;
+    opacity: 0.3;
+    filter: alpha(opacity=50);
+}
+
+.registrationform {
+
+    height:50px;
+    width :30px;
+    background-color: #65C4FF;
+    text-align: center;
+    padding-left: 150px;
+    margin:30px
+    /*opacity: 0.5;*/
+    /*filter: alpha(opacity=50);*/
+
+}
+
+#headbar a.button {
+    display: inline-block;
+    /*margin: 0 10px 0 0;*/
+}
+
+#postform {
+    display: inline-block;
+    margin: 40px;
+    width: 800px;
+   opacity: 0.5;
+    background-color: #FFBE65;
+    filter: alpha(opacity=30);
+    padding: 30px;
+    /*margin: 100px 0 0 0;*/
+}
+
+#postform label div {
+    width:400px;
+    display:inline-block;
+    background-color: rgba(0,0,0,.5);;
+}
+
+#postform form div {
+    width:400px;
+    display:inline-block;
+    background-color: transparent;
+}
+
+
+#frame {
+    border: 2px;
+    border-color: #1F2A7F;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+h2 {
+    font-size: 25px;
+}
+
+h3 {
+    font-size: 20px;
+}
+
+p {
+    font-size: 15px;
+}
+
+.button {
+    background-color: #FFBE65;
+    color: white;
+    padding: 20px;
+    margin: 0;
+    font-size: 20px;
+}
+
+.job_tile {
+    /*height:200px;*/
+    background-color: #FFBE65;
+    display:inline-block;
+    vertical-align: top;
+    border-style: solid;
+	padding: 14px;
+	border-width: 3px;
+	color: #B27623;
+	height: 200px;
+	list-style-type: none;
+	margin: 10px;
+	position: relative;
+	text-align: center;
+	width: 200px;
+	/*border-radius: 100px;*/
+	box-shadow: 10px 10px 5px #888888;
+}
+
+.cta a {
+    background-color: #2E80B2;
+    height:200px;
+    width:300px;
+    color:white;
+    text-align: center;
+}
+.cta {
+    background-color:white;
+    width:100%;
+    color:white;
+    text-align: center;
+    padding: 70px 0 70px 0;
+}
+
+

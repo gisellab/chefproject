@@ -11,11 +11,24 @@
             <a href="{% url 'edit_settings_restaurant' %}" class="button">Edit Settings</a>
             <a href="{% url 'jobs_pending' %}" class="button">Jobs Pending</a>
             <a href="{% url 'add_a_new_job' %}" class="button">Add New Job</a>
+            <a href="{% url 'inbox' %}" class="button">Inbox</a>
             <a href="{% url 'buy_credit' %}" class="button">Buy Credit</a>
             <a href="{% url 'previous_jobs' %}" class="button">Previous Jobs</a>
 
         {% endblock %}
-  </div>
+ </div>
 
         {% endblock %}
-        {% block content %}{% endblock %}
+
+        {% block content %}
+       {% for a in applications %}
+
+<div class="job_tile">
+<h3>{{ a.applicant.username }}<br></h3>
+{{ a.date_applied }}<br>
+{{ a.job.date_of_job }}<br>
+{{ a.job.name_of_job}}<br>
+{#<h2><a href="/apply_for_a_new_job/{{ j.id }}/">APPLY</a></h2>#}
+</div>
+{% endfor %}
+{% endblock %}

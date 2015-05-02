@@ -12,12 +12,53 @@
             <a href="{% url 'edit_settings_restaurant' %}" class="button">Edit Settings</a>
             <a href="{% url 'jobs_pending' %}" class="button">Jobs Pending</a>
             <a href="{% url 'add_a_new_job' %}" class="button">Add New Job</a>
+            <a href="{% url 'inbox' %}" class="button">Inbox</a>
             <a href="{% url 'buy_credit' %}" class="button">Buy Credit</a>
             <a href="{% url 'previous_jobs' %}" class="button">Previous Jobs</a>
 
         {% endblock %}
   </div>
+{% endblock %}
 
+        {% block content %}
+ <div id="postform">
+            <h1>Fill in your profile</h1>
+            <form action="/edit_settings_restaurant/" method="POST" id="frame">
+            {% csrf_token %}
+                    <label>
+                        <div> Name of Restaurant: </div>
+                        <textarea style="width: 300px; height: 30px" name="Name_Restaurant" type="text"></textarea>
+                    </label>
+                        <br>
+                        <label>
+                        <div>Restaurant Address: </div>
+                        <textarea style="width: 300px; height: 30px" name="restaurant_address" type="text"></textarea>
+                    </label>
+                    <br>
+                    <label>
+                        <div>Main Contact Name: </div>
+                        <textarea style="width: 300px; height: 30px" name="main_contact_name" type="text"></textarea>
+                    </label>
+                    <br>
+                     <div> Contact Telephone number: </div>
+                        <input name="contact_number" type="integer">
+                    </label>
+                    <br>
+                    <div> Contact Email Address: </div>
+                        <input name="contact_email" type="text">
+                    </label>
+                    <br>
+                        <label>
+                        <div>Food Style: </div>
+                        <textarea style="width: 300px; height: 30px" name="food_style" type="text"></textarea>
+                    </label>
+                        <br>
+                         <label>
+                        <div> Signature Dish: </div>
+                        <textarea style="width: 300px; height: 30px" name="signature_dish" type="text"></textarea>
+                    </label>
+                    <br>
+                    <label>
+                <div><h2><input type="submit" name="submit" value="Update your profile"></h2></div>
+            </form>
         {% endblock %}
-
-        {% block content %}{% endblock %}

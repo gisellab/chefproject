@@ -1,23 +1,18 @@
-{% extends "base.html" %}
+{% extends "chef/../base.html" %}
 
-{% block page_subtitle %}Restaurant Profile Page{% endblock %}
+{% block page_subtitle %}Read Messages{% endblock %}
 
 {% block menu %}
 
     <div id="headbar">
-
-        {% block horizontalbar %}
-            <a href="{% url 'restaurantprofilepage(?P<poster_id>\d+)' %}" class="button">Profile Page</a>
+            <a href="{% url 'restaurantprofilepage' %}" class="button">Profile Page</a>
             <a href="{% url 'edit_settings_restaurant' %}" class="button">Edit Settings</a>
             <a href="{% url 'jobs_pending' %}" class="button">Jobs Pending</a>
             <a href="{% url 'add_a_new_job' %}" class="button">Add New Job</a>
-            <a href="{% url 'inbox' %}" class="button">Inbox</a>
             <a href="{% url 'buy_credit' %}" class="button">Buy Credit</a>
+            <a href="{% url 'inbox' %}" class="button">Inbox</a>
             <a href="{% url 'previous_jobs' %}" class="button">Previous Jobs</a>
 
-        {% endblock %}
-  </div>
+    </div>
 
-        {% endblock %}
-
-        {% block content %}{% endblock %}
+{% endblock %}

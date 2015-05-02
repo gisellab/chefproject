@@ -7,12 +7,12 @@
     <div id="headbar">
 
         {% block horizontalbar %}
-            <a href="{% url 'userprofilepage' %}" class="button">Profile Page</a>
-            <a href="{% url 'edit_settings_user' %}" class="button">Edit Settings</a>
+
+            <a href="{% url 'userprofilepage' user.id %}" class="button">Profile Page</a>
+            <a href="{% url 'edit_settings_user' user.id %}" class="button">Edit Settings</a>
             <a href="{% url 'jobs_board' %}" class="button">Jobs Board</a>
-            <a href="{% url 'apply_for_a_new_job' %}" class="button">Apply For A New Job</a>
+            <a href="{% url 'inbox' #}" class="button">Inbox</a>
             <a href="{% url 'jobs_pending_user' %}" class="button">Jobs Pending</a>
-            <a href="{% url 'buy_credit_user' %}" class="button">Buy Credit</a>
 
         {% endblock %}
     </div>
@@ -24,11 +24,14 @@
 {% for j in jobs %}
 
 <div class="job_tile">
-{{ j.name_of_job }}<br>
+<h3>{{ j.name_of_job }}<br></h3>
+{{ j.type }}<br>
+{{ j.restaurant_name }}<br>
 {{ j.date_of_job }}<br>
 {{ j.type_of_worker }}<br>
 {{ j.description }}<br>
-{#<a href="/apply_for_a_new_job/{{ j.id }}/">Apply</a>#}
+<h2><a href="/apply_for_a_new_job/{{ j.id }}/">APPLY</a></h2>
+<h2><a href="/restaurantprofilepageview/{{ j.poster.id }}/">SEE PROFILE</a></h2>
 </div>
 {% endfor %}
 </div>

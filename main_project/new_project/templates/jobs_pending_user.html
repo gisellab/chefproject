@@ -7,16 +7,31 @@
     <div id="headbar">
 
         {% block horizontalbar %}
-            <a href="{% url 'userprofilepage' %}" class="button">Profile Page</a>
-            <a href="{% url 'edit_settings_user' %}" class="button">Edit Settings</a>
+
+            <a href="{% url 'userprofilepage' user.id %}" class="button">Profile Page</a>
+            <a href="{% url 'edit_settings_user' user.id %}" class="button">Edit Settings</a>
             <a href="{% url 'jobs_board' %}" class="button">Jobs Board</a>
-            <a href="{% url 'apply_for_a_new_job' %}" class="button">Apply For A New Job</a>
+            <a href="{% url 'inbox' #}" class="button">Inbox</a>
             <a href="{% url 'jobs_pending_user' %}" class="button">Jobs Pending</a>
-            <a href="{% url 'buy_credit_user' %}" class="button">Buy Credit</a>
 
         {% endblock %}
   </div>
 
         {% endblock %}
 
-        {% block content %}{% endblock %}
+        {% block content %}
+       {% for a in applications %}
+
+<div class="job_tile">
+<h3>{{ a.job.name_of_job }}<br></h3>
+{{ a.date_applied }}<br>
+{{ a.job.date_of_job }}<br>
+{{ a.job.type_of_worker }}<br>
+{{ a.job.description }}<br>
+{#<h2><a href="/apply_for_a_new_job/{{ j.id }}/">APPLY</a></h2>#}
+</div>
+{% endfor %}
+
+
+
+       {% endblock %}
