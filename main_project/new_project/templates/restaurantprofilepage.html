@@ -7,7 +7,7 @@
     <div id="headbar">
 
         {% block horizontalbar %}
-            <a href="{% url 'restaurantprofilepage(?P<poster_id>\d+)' %}" class="button">Profile Page</a>
+            <a href="{% url 'restaurantprofilepage' %}" class="button">Profile Page</a>
             <a href="{% url 'edit_settings_restaurant' %}" class="button">Edit Settings</a>
             <a href="{% url 'jobs_pending' %}" class="button">Jobs Pending</a>
             <a href="{% url 'add_a_new_job' %}" class="button">Add New Job</a>
@@ -20,4 +20,17 @@
 
         {% endblock %}
 
-        {% block content %}{% endblock %}
+        {% block content %}
+<h2>Welcome {{ user.username }}<br>
+{{ restaurant.Name_Restaurant }}
+XXXXX
+This is your Profile Page</h2>
+<input value="{{ request.user.NewUserProfile.Name_Restaurant }}"/><br>
+<input value="{{ user.restaurant_address }}"/><br>
+<input value="{{ user.main_contact_name }}"/><br>
+<input value="{{ user.contact_number }}"/><br>
+<input value="{{ user.contact_email }}"/><br>
+<input value="{{ user.food_style }}"/><br>
+<input value="{{ user.signature_dish }}"/><br>
+
+        {% endblock %}

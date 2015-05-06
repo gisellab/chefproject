@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
-from .forms import NewUserRestaurantForm, NewUserWorkerForm, NewUserProfileForm, NewRestaurantProfileForm
-from chef.forms import UserForm, UserProfileForm
+# from .forms import NewUserRestaurantForm, NewUserWorkerForm, NewUserProfileForm, NewRestaurantProfileForm
+# from chef.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
-from chef.models import PostNewJob, Applicant, Message, UserProfile, UserType, NewRestaurantProfile, NewUserProfile
+from .models import PostNewJob, Applicant, Message, UserType, NewRestaurantProfile, NewUserProfile
 from django.utils.dateparse import parse_date
+
 
 def register(request):
     # A boolean value for telling the template whether the registration was successful.
@@ -75,9 +76,11 @@ def user_logout(request):
     # Take the user back to the homepage.
     return HttpResponseRedirect('/chef/')
 
+
 @login_required
 def restricted(request):
     return HttpResponse("Since you're logged in, you can see this text!")
+
 
 def user_login(request):
     # If the request is a HTTP POST, try to pull out the relevant information.
@@ -103,7 +106,13 @@ def user_login(request):
                 # If the account is valid and active, we can log the user in.
                 # We'll send the user back to the homepage.
                 login(request, user)
-                return HttpResponseRedirect('/userprofilepage/' + str(user.id))
+                # usertype=UserType.objects.filter(user=request.user.userprofile)[0]
+                print user.userprofile.type.name
+                if user.userprofile.type.name == "restaurant":
+                    return HttpResponseRedirect('/restaurantprofilepage/' + str(user.id))
+                else:
+                    return HttpResponseRedirect('/userprofilepage/' + str(user.id))
+
             else:
                 # An inactive account was used - no logging in!
                 return HttpResponse("Your chef account is disabled.")
@@ -119,6 +128,7 @@ def user_login(request):
         # blank dictionary object...
         return render(request, 'login.html', {})
 
+
 def new_restaurant_user(request):
     if request.method == 'POST':
         form = NewUserRestaurantForm
@@ -128,6 +138,7 @@ def new_restaurant_user(request):
         form = NewUserRestaurantForm
     context_dict = {'form': form}
     return render(request, 'new_restaurant_user.html', context_dict)
+
 
 def new_worker_user(request):
     if request.method == 'POST':
@@ -139,37 +150,90 @@ def new_worker_user(request):
     context_dict = {'form': form}
     return render(request, 'new_worker_user.html', context_dict)
 
+
 def index(request):
     context_dict = {'boldmessage': "I am bold font from the context"}
     return render(request, 'mainpage.html', context_dict)
 
+
 def contact_us(request):
     return render(request, "contact_us.html")
 
+
 def register_restaurant(request):
     if request.POST:
-        u = User.objects.create_user(request.POST['name'], email=request.POST['email'], password=request.POST['password'])
-        p = UserProfile(user=u)
+        u = User.objects.create_user(request.POST['name'], email=request.POST['email'],
+                                     password=request.POST['password'])
+        p = NewRestaurantProfile(profile=u)
         p.type = UserType.objects.filter(name='restaurant')[0]
         p.save()
-        return render(request, 'mainpage.html')
+        # Use Django's machinery to attempt to see if the username/password
+        # combination is valid - a User object is returned if it is.
+        user = authenticate(username=u.username, password=request.POST['password'])
+
+        # If we have a User object, the details are correct.
+        # If None (Python's way of representing the absence of a value), no user
+        # with matching credentials was found.
+        if user:
+            # Is the account active? It could have been disabled.
+            if user.is_active:
+                # If the account is valid and active, we can log the user in.
+                # We'll send the user back to the homepage.
+                login(request, user)
+                # usertype=UserType.objects.filter(user=request.user.userprofile)[0]
+                return HttpResponseRedirect('/restaurantprofilepage/' + str(user.id))
+
+            else:
+                # An inactive account was used - no logging in!
+                return HttpResponse("Your chef account is disabled.")
+        else:
+            # Bad login details were provided. So we can't log the user in.
+            print "Invalid login details: {0}, {1}".format(username, password)
+            return HttpResponse("Invalid login details supplied.")
+        return redirect(request, '/chef/restaurantprofilepage/(?P<poster_id>\d+)')
     return render(request, "register_restaurant.html")
+
 
 def register_user(request):
     if request.POST:
-        u = User.objects.create_user(request.POST['name'], email=request.POST['email'], password=request.POST['password'])
-        p = UserProfile(user=u)
+        u = User.objects.create_user(request.POST['name'], email=request.POST['email'],
+                                     password=request.POST['password'])
+        p = NewUserProfile(profile=u)
         p.type = UserType.objects.filter(name='user')[0]
         p.save()
-        print request.POST
-        return redirect('/chef/userprofilepageview/(?P<poster_id>\d+)')
-    return render(request, 'register_user')
+        # Use Django's machinery to attempt to see if the username/password
+        # combination is valid - a User object is returned if it is.
+        user = authenticate(username=request.POST['name'], password=request.POST['password'])
+
+        # If we have a User object, the details are correct.
+        # If None (Python's way of representing the absence of a value), no user
+        # with matching credentials was found.
+        if user:
+            # Is the account active? It could have been disabled.
+            if user.is_active:
+                # If the account is valid and active, we can log the user in.
+                # We'll send the user back to the homepage.
+                login(request, user)
+                # usertype=UserType.objects.filter(user=request.user.userprofile)[0]
+                return HttpResponseRedirect('/userprofilepage/')
+
+            else:
+                # An inactive account was used - no logging in!
+                return HttpResponse("Your chef account is disabled.")
+        else:
+            # Bad login details were provided. So we can't log the user in.
+            print "Invalid login details: {0}, {1}".format(username, password)
+            return HttpResponse("Invalid login details supplied.")
+    return render(request, 'register_user.html')
+
 
 def about(request):
     return HttpResponse("<br/> <a href='/about'>About</a>Guest Chef say this is the about page")
 
+
 def mainpage(request):
     return render(request, 'mainpage.html')
+
 
 def add_a_new_job(request):
     if request.POST:
@@ -199,8 +263,10 @@ def add_a_new_job(request):
         return HttpResponseRedirect('/jobs_board/')
     return render(request, 'add_a_new_job.html')
 
+
 def buy_credit(request):
     return render(request, 'buy_credit.html')
+
 
 def jobs_pending_user(request):
     # p = PostNewJob()
@@ -210,19 +276,24 @@ def jobs_pending_user(request):
     # p.save()
     return render(request, 'jobs_pending_user.html', {'applications': Applicant.objects.filter(applicant=request.user)})
 
+
 def job_applied(request):
     p = PostNewJob()
     p.applicant = request.user
     return render(request, 'jobs_pending.html')
 
+
 def jobs_pending(request):
     return render(request, 'jobs_pending.html', {'applications': Applicant.objects.filter(job__poster=request.user)})
+
 
 def previous_jobs(request):
     return render(request, 'previous_jobs.html')
 
+
 def buy_credit_user(request):
     return render(request, 'buy_credit_user.html')
+
 
 def apply_for_a_new_job(request, job_id):
     a = Applicant()
@@ -233,18 +304,21 @@ def apply_for_a_new_job(request, job_id):
     return redirect('jobs_pending_user')
     # return render(request, 'apply_for_a_new_job.html', {"job": j})
 
+
 def previous_jobs_user(request):
     return render(request, 'previous_jobs_user.html')
+
 
 def jobs_board(request):
     jobs = PostNewJob.objects.all()
     return render(request, 'jobs_board.html', {'jobs': jobs})
 
+
 def edit_settings_restaurant(request):
     if request.POST:
         profile = NewRestaurantProfile()
         profile.profile = request.user
-        profile.Name_Restaurant= request.POST['Name_Restaurant']
+        profile.Name_Restaurant = request.POST['Name_Restaurant']
         profile.restaurant_address = request.POST['restaurant_address']
         profile.Main_contact_name = request.POST['main_contact_name']
         profile.contact_number = request.POST['contact_number']
@@ -253,51 +327,63 @@ def edit_settings_restaurant(request):
         profile.Signature_dish = request.POST['signature_dish']
         profile.save()
         return HttpResponseRedirect('/restaurantprofilepage/')
-    return render(request, 'edit_settings_restaurant.html', {'user':request.user})
+    profile = NewRestaurantProfile.objects.filter(profile=request.user)[0]
+    return render(request, 'edit_settings_restaurant.html', {'user': request.user, "profile": profile})
+
 
 def edit_settings_user(request):
     if request.POST:
+        print request.POST
         profile = NewUserProfile()
         profile.profile = request.user
         profile.name = request.POST['name']
         profile.job_description = request.POST['job_description']
         profile.previous_restaurants = request.POST['previous_restaurants']
         profile.job_titles_held = request.POST['job_titles_held']
-        profile.years = request.POST['years']
+        profile.years = int(request.POST['years'])
         profile.about_me = request.POST['about_me']
-        profile.profile_picture = request.POST['profile_picture']
         profile.save()
         return HttpResponseRedirect('/userprofilepage/')
-    return render(request, 'edit_settings_user.html', )
+    return render(request, 'edit_settings_user.html', {'user': request.user})
+
 
 def facts_page(request):
     return render(request, 'facts_page.html')
 
-def userprofilepage(request, user_id):
-    user = User.objects.get(id= user_id)
-    return render(request, 'userprofilepage.html', {"user":user})
 
-def restaurantprofilepage(request, user_id):
-    poster = User.objects.get(id= user_id)
-    return render(request, 'restaurantprofilepage.html', {"poster":poster})
+def userprofilepage(request):
+    print request.user
+    worker_list = NewUserProfile.objects.filter(profile=request.user)
+    worker= worker_list[0]
+    return render(request, 'userprofilepage.html', {"worker": worker})
+
+
+def restaurantprofilepage(request):
+    restaurant = NewRestaurantProfile.objects.filter(profile=request.user)[0]
+    return render(request, 'restaurantprofilepage.html', {"restaurant": restaurant})
+
 
 def userprofilepageview(request, user_id):
     j = User.objects.get(id=user_id)
     print j
     return render(request, 'userprofilepageview.html', {"user": j})
 
+
 def restaurantprofilepageview(request, poster_id):
     j = User.objects.get(id=poster_id)
     print j
     return render(request, 'restaurantprofilepageview.html', {"restaurant": j})
+
 
 def inbox(request):
     # if request.method == 'POST':
     # rawdate=request.POST['']
     return render(request, 'inbox.html')
 
+
 def read_message(request):
     return render(request, 'read_message.html')
+
 
 def send_message(request):
     return render(request, 'send_message.html')

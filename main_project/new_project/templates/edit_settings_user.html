@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
+{#{% load crispy_forms_tags %}#}
 
 {% block page_subtitle %}Edit Settings{% endblock %}
 
@@ -9,8 +9,8 @@
 
         {% block horizontalbar %}
 
-            <a href="{% url 'userprofilepage' user.id %}" class="button">Profile Page</a>
-            <a href="{% url 'edit_settings_user' user.id %}" class="button">Edit Settings</a>
+            <a href="{% url 'userprofilepage' %}" class="button">Profile Page</a>
+            <a href="{% url 'edit_settings_user' %}" class="button">Edit Settings</a>
             <a href="{% url 'jobs_board' %}" class="button">Jobs Board</a>
             <a href="{% url 'inbox' #}" class="button">Inbox</a>
             <a href="{% url 'jobs_pending_user' %}" class="button">Jobs Pending</a>
@@ -34,6 +34,14 @@
                     </label>
                         <br>
                         <label>
+                        <div> What type of Restaurant professional are you? : </div>
+                        <input type="radio" name="type" value="Chef">Chef
+                        <input type="radio" name="type" value="Bartender">Bartender
+                        <input type="radio" name="type" value="Server">Server
+                        <input type="radio" name="type" value="Dishwasher">Dishwasher
+                    </label>
+                    <br>
+                        <label>
                         <div>Job Description: </div>
                         <textarea style="width: 300px; height: 30px" name="job_description" type="text"></textarea>
                     </label>
@@ -50,21 +58,21 @@
                     <br>
                     <label>
                         <div> Number of Years in Industry: </div>
-                        <input type="radio" name="years"> 1-3 Yrs
-                        <input type="radio" name="years">3-5 Yrs
-                        <input type="radio" name="years">5-8 Yrs
-                        <input type="radio" name="years">10+ Yrs
+                        <input type="radio" name="years" value="1">One to Three
+                        <input type="radio" name="years" value="2">Three to Five
+                        <input type="radio" name="years" value="3">Six to Eight
+                        <input type="radio" name="years" value="4">Ten +
                     </label>
                     <br>
                     <label>
                         <div> About Me: </div>
                         <textarea style="width: 300px; height: 60px" name="about_me" type="text" maxlength="300"></textarea>
                     </label>
-                    <label>
-                        <div> Upload Profile Picture: </div>
-                        <img name="profile_picture" type="image" ></img>
-                    </label>
-                    <label>
+{#                    <label>#}
+{#                        <div> Upload Profile Picture: </div>#}
+{#                        <img name="profile_picture" type="image" ></img>#}
+{#                    </label>#}
+{#                    <label>#}
                 <div><h2><input type="submit" name="submit" value="Update your profile"></h2></div>
             </form>
 

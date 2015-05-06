@@ -118,9 +118,9 @@ a:link {
 }
 
 .footerboxes {
-    padding: 30px;
+    padding: 5px;
     /*height: 50px;*/
-    width: 30%;
+    /*width: 30%;*/
     display: inline-block;
     line-height: 50px;
     font-family: Lucida Console, monospace;
@@ -129,10 +129,8 @@ a:link {
 #headbar {
     line-height: 1px;
     /*width: 800px);*/
-    color: white;
-    /*margin-left: 200px;*/
+    color: white
     position: relative;
-    margin-left: 130px;
     text-align: center;
     opacity: 0.9;
     filter: alpha(opacity=50);

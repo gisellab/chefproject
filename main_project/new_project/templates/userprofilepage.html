@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
-{% block page_subtitle %}User Profile Page{% endblock %}
+{% block page_subtitle %}{{ user.username }} Profile Page{% endblock %}
 
 {% block menu %}
 
     <div id="headbar">
 
         {% block horizontalbar %}
-            <a href="{% url 'userprofilepage' user.id %}" class="button">Profile Page</a>
-            <a href="{% url 'edit_settings_user' user.id %}" class="button">Edit Settings</a>
+            <a href="{% url 'userprofilepage' %}" class="button">Profile Page</a>
+            <a href="{% url 'edit_settings_user' %}" class="button">Edit Settings</a>
             <a href="{% url 'jobs_board' %}" class="button">Jobs Board</a>
             <a href="{% url 'inbox' #}" class="button">Inbox</a>
             <a href="{% url 'jobs_pending_user' %}" class="button">Jobs Pending</a>
@@ -22,12 +22,21 @@
 
 {% block content %}
 <div id="body">
-<h1>User Profile Page</h1>
+<P ALIGN=Center><h2>Welcome {{ user.username }}<br>
+This is your Profile Page</h2></P ALIGN=Center>
 
-<p>Welcome to your personal profile page. <br>
-Navigate through the different sections of the site using the headbar above </p>
+<p>Navigate through the different sections of the site using the headbar above </p>
 
 </div>
+
+<input value="{{ user.username }}"/><br>
+<input value="{{ user.job_description }}"/><br>
+<input value="{{ user.type }}"/><br>
+<input value="{{ user.previous_restaurants }}"/><br>
+<input value="{{ user.job_titles_held }}"/><br>
+<input value="{{ user.years }}"/><br>
+<input value="{{ user.about_me }}"/><br>
+
 {% endblock %}
 
 
