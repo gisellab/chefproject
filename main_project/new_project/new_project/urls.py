@@ -1,6 +1,5 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from django.conf import settings  # New Import
 from django.conf.urls.static import static  # New Import
 from django.conf import settings
 
@@ -11,13 +10,13 @@ urlpatterns = patterns('',
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^chef/', include('chef.urls')),
                        url(r'^$', 'chef.views.mainpage', name='mainpage'),
-                       url(r'^new_restaurant_user/', 'chef.views.new_restaurant_user', name='new_restaurant_user'),
-                       url(r'^new_worker_user/', 'chef.views.new_worker_user', name='new_worker_user'),
+                       # url(r'^new_restaurant_user/', 'chef.views.new_restaurant_user', name='new_restaurant_user'),
+                       # url(r'^new_worker_user/', 'chef.views.new_worker_user', name='new_worker_user'),
                        url(r'^userprofilepage/', 'chef.views.userprofilepage', name='userprofilepage'),
                        url(r'^restaurantprofilepage/', 'chef.views.restaurantprofilepage',
                            name='restaurantprofilepage'),
                        url(r'^facts_page/', 'chef.views.facts_page', name='facts_page'),
-                       url(r'^register/$', 'chef.views.register', name='register'),  # ADD NEW PATTERN!
+                       # url(r'^register/$', 'chef.views.register', name='register'),  # ADD NEW PATTERN!
                        url(r'^login/$', 'chef.views.user_login', name='login'),
                        url(r'^logout/$', 'chef.views.user_logout', name='logout'),
                        url(r'^restricted/', 'chef.views.restricted', name='restricted'),
@@ -42,9 +41,11 @@ urlpatterns = patterns('',
                        url(r'^jobs_pending_user/', 'chef.views.jobs_pending_user', name='jobs_pending_user'),
                        url(r'^register_restaurant/', 'chef.views.register_restaurant', name='register_restaurant'),
                        url(r'^register_user/', 'chef.views.register_user', name='register_user'),
-                       url(r'^restaurantprofilepageview/', 'chef.views.restaurantprofilepageview',
+                       url(r'^restaurantprofilepageview/(?P<restaurant_id>[0-9]+)/',
+                           'chef.views.restaurantprofilepageview',
                            name='restaurantprofilepageview'),
-                       url(r'^userprofilepageview/', 'chef.views.userprofilepageview', name='userprofilepageview'),
+                       url(r'^userprofilepageview/(?P<worker_id>[0-9]+)/', 'chef.views.userprofilepageview',
+                           name='userprofilepageview'),
                        )
 
 if not settings.DEBUG:

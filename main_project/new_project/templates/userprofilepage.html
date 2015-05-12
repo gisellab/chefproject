@@ -28,14 +28,15 @@ This is your Profile Page</h2></P ALIGN=Center>
 <p>Navigate through the different sections of the site using the headbar above </p>
 
 </div>
-
-<input value="{{ user.username }}"/><br>
-<input value="{{ user.job_description }}"/><br>
-<input value="{{ user.type }}"/><br>
-<input value="{{ user.previous_restaurants }}"/><br>
-<input value="{{ user.job_titles_held }}"/><br>
-<input value="{{ user.years }}"/><br>
-<input value="{{ user.about_me }}"/><br>
+<div class="value">
+<input value="{{ worker.name }}"/><br>
+<input value="{{ worker.job_description }}"/><br>
+<input value="{{ worker.role }}"/><br>
+<input value="{{ worker.previous_restaurants }}"/><br>
+<input value="{{ worker.job_titles_held }}"/><br>
+<input value="{{ worker.years }}"/><br>
+<input value="{{ worker.about_me }}"/><br>
+</div>
 
 {% endblock %}
 

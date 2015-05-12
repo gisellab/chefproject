@@ -28,19 +28,6 @@ class UserType(models.Model):
         return self.name
 
 
-# class UserProfile(models.Model):
-#     # This line is required. Links UserProfile to a User model instance.
-#     user = models.OneToOneField(User)
-#     type = models.ForeignKey(UserType, null=True)
-#     # The additional attributes we wish to include.
-#     website = models.URLField(blank=True)
-#     picture = models.ImageField(upload_to='profile_images', blank=True)
-#
-#     # Override the __unicode__() method to return out something meaningful!
-#     def __unicode__(self):
-#         return self.user.username
-
-
 class Skill(models.Model):
     Chef = models.CharField(max_length=255)
     Server = models.CharField(max_length=255)
@@ -82,22 +69,25 @@ class UserWorker(models.Model):
 
 class NewUserProfile(models.Model):
     # auth_user = models.OnetoOneField(User, primary_key = True)
-    profile = models.ForeignKey(User)
+    type = models.ForeignKey(UserType, blank=True, null=True)
+    profile = models.ForeignKey(User, related_name='profile')
     name = models.CharField(max_length=255, null=True, blank=True)
+    role = models.CharField(max_length=255, null=True, blank=True)
     job_description = models.CharField(max_length=255, null=True, blank=True)
     previous_restaurants = models.CharField(max_length=255,null=True, blank=True )
     job_titles_held = models.CharField(max_length=20, null=True, blank=True)
-    years = models.IntegerField()
+    years = models.IntegerField(null=True, blank=True)
     about_me = models.TextField(max_length=150,null=True, blank=True )
     Upload_profile_picture = models.ImageField(blank=True, null=True)
     # skill = models.ManyToManyField(Skill)
 
     def __unicode__(self):
-        return self.name
+        return self.profile.username
 
 
 class NewRestaurantProfile(models.Model):
     profile = models.ForeignKey(User, related_name='restaurant')
+    type = models.ForeignKey(UserType, blank=True, null=True)
     Name_Restaurant = models.CharField(max_length=255,null=True, blank=True )
     restaurant_address = models.TextField(null=True, blank=True)
     Main_contact_name = models.CharField(max_length=255)
@@ -107,7 +97,7 @@ class NewRestaurantProfile(models.Model):
     Signature_dish = models.CharField(max_length=255)
 
     def __unicode__(self):
-        return self.Name_Restaurant
+        return self.profile.username
 
 
 class PostNewJob(models.Model):
@@ -147,14 +137,7 @@ class Message(models.Model):
         return self.subject
 
 
-# class UserMessage(models.Model):
-# subject = models.CharField(max_length=150)
-#     body = models.CharField(max_length=300)
-#     user = models.ForeignKey(User)
-#     job = models.ForeignKey(JobPoster)
-#
-#     def __unicode__(self):
-#         return self.user
+
 
 
 

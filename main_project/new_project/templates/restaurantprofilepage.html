@@ -23,14 +23,13 @@
         {% block content %}
 <h2>Welcome {{ user.username }}<br>
 {{ restaurant.Name_Restaurant }}
-XXXXX
 This is your Profile Page</h2>
-<input value="{{ request.user.NewUserProfile.Name_Restaurant }}"/><br>
-<input value="{{ user.restaurant_address }}"/><br>
-<input value="{{ user.main_contact_name }}"/><br>
-<input value="{{ user.contact_number }}"/><br>
-<input value="{{ user.contact_email }}"/><br>
-<input value="{{ user.food_style }}"/><br>
-<input value="{{ user.signature_dish }}"/><br>
+<input value="{{ restaurant.Name_Restaurant }}"/><br>
+<input value="{{ restaurant.restaurant_address }}"/><br>
+<input value="{{ restaurant.Main_contact_name }}"/><br>
+<input value="{{ restaurant.contact_number }}"/><br>
+<input value="{{ restaurant.contact_email }}"/><br>
+<input value="{{ restaurant.food_style }}"/><br>
+<input value="{{ restaurant.Signature_dish }}"/><br>
 
         {% endblock %}

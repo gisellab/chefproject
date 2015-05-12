@@ -2,24 +2,33 @@
 
 {% block page_subtitle %}{% endblock %}
 
-{% block menu %}
+{#{% block menu %}#}
 
-    <div id="headbar">
+{#    <div id="headbar">#}
 
-        {% block horizontalbar %}
-            <a href="{% url 'restaurantprofilepage' user.id %}" class="button">Profile Page</a>
-            <a href="{% url 'edit_settings_restaurant' user.id %}" class="button">Edit Settings</a>
-            <a href="{% url 'jobs_pending' %}" class="button">Jobs Pending</a>
-            <a href="{% url 'add_a_new_job' %}" class="button">Add New Job</a>
-            <a href="{% url 'inbox' %}" class="button">Inbox</a>
-            <a href="{% url 'buy_credit' %}" class="button">Buy Credit</a>
-            <a href="{% url 'previous_jobs' %}" class="button">Previous Jobs</a>
-
-        {% endblock %}
-  </div>
-  {% endblock %}
+{#        {% block horizontalbar %}#}
+{#            <a href="{% url 'restaurantprofilepageview' restaurant.id %}" class="button">Profile Page</a>#}
+{#            <a href="{% url 'edit_settings_restaurant' user.id %}" class="button">Edit Settings</a>#}
+{#            <a href="{% url 'jobs_pending' %}" class="button">Jobs Pending</a>#}
+{#            <a href="{% url 'add_a_new_job' %}" class="button">Add New Job</a>#}
+{#            <a href="{% url 'inbox' %}" class="button">Inbox</a>#}
+{#            <a href="{% url 'buy_credit' %}" class="button">Buy Credit</a>#}
+{#            <a href="{% url 'previous_jobs' %}" class="button">Previous Jobs</a>#}
+{##}
+{#        {% endblock %}#}
+{#  </div>#}
+{#  {% endblock %}#}
 
 {% block content %}
-{{ restaurant.Name_Restaurant }}
-{{ restaurant.Restaurant_Description }}
+
+<h1>{{ restaurant.Name_Restaurant }}</h1>
+
+{{ restaurant.Name_Restaurant }}<br>
+{{ restaurant.restaurant_address }}<br>
+{{ restaurant.Main_contact_name }}<br>
+{{ restaurant.contact_number }}<br>
+{{ restaurant.contact_email }}<br>
+{{ restaurant.food_style }}<br>
+{{ restaurant.Signature_dish }}<br>
+
 {% endblock %}

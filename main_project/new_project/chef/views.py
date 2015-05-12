@@ -10,71 +10,71 @@ from .models import PostNewJob, Applicant, Message, UserType, NewRestaurantProfi
 from django.utils.dateparse import parse_date
 
 
-def register(request):
-    # A boolean value for telling the template whether the registration was successful.
-    # Set to False initially. Code changes value to True when registration succeeds.
-    registered = False
-
-    # If it's a HTTP POST, we're interested in processing form data.
-    if request.method == 'POST':
-        # Attempt to grab information from the raw form information.
-        # Note that we make use of both UserForm and UserProfileForm.
-        user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
-
-        # If the two forms are valid...
-        if user_form.is_valid() and profile_form.is_valid():
-            # Save the user's form data to the database.
-            user = user_form.save()
-
-            # Now we hash the password with the set_password method.
-            # Once hashed, we can update the user object.
-            user.set_password(user.password)
-            user.save()
-
-            # Now sort out the UserProfile instance.
-            # Since we need to set the user attribute ourselves, we set commit=False.
-            # This delays saving the model until we're ready to avoid integrity problems.
-            profile = profile_form.save(commit=False)
-            profile.user = user
-
-            # Did the user provide a profile picture?
-            # If so, we need to get it from the input form and put it in the UserProfile model.
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-
-            # Now we save the UserProfile model instance.
-            profile.save()
-
-            # Update our variable to tell the template registration was successful.
-            registered = True
-
-        # Invalid form or forms - mistakes or something else?
-        # Print problems to the terminal.
-        # They'll also be shown to the user.
-        else:
-            print user_form.errors, profile_form.errors
-
-    # Not a HTTP POST, so we render our form using two ModelForm instances.
-    # These forms will be blank, ready for user input.
-    else:
-        user_form = UserForm()
-        profile_form = UserProfileForm()
-
-    # Render the template depending on the context.
-    return render(request,
-                  'chef/register.html',
-                  {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
-
+# def register(request):
+#     # A boolean value for telling the template whether the registration was successful.
+#     # Set to False initially. Code changes value to True when registration succeeds.
+#     registered = False
+#
+#     # If it's a HTTP POST, we're interested in processing form data.
+#     if request.method == 'POST':
+#         # Attempt to grab information from the raw form information.
+#         # Note that we make use of both UserForm and UserProfileForm.
+#         # user_form = UserForm(data=request.POST)
+#         profile_form = UserProfileForm(data=request.POST)
+#
+#         # If the two forms are valid...
+#         if user_form.is_valid() and profile_form.is_valid():
+#             # Save the user's form data to the database.
+#             user = user_form.save()
+#
+#             # Now we hash the password with the set_password method.
+#             # Once hashed, we can update the user object.
+#             user.set_password(user.password)
+#             user.save()
+#
+#             # Now sort out the UserProfile instance.
+#             # Since we need to set the user attribute ourselves, we set commit=False.
+#             # This delays saving the model until we're ready to avoid integrity problems.
+#             profile = profile_form.save(commit=False)
+#             profile.user = user
+#
+#             # Did the user provide a profile picture?
+#             # If so, we need to get it from the input form and put it in the UserProfile model.
+#             if 'picture' in request.FILES:
+#                 profile.picture = request.FILES['picture']
+#
+#             # Now we save the UserProfile model instance.
+#             profile.save()
+#
+#             # Update our variable to tell the template registration was successful.
+#             registered = True
+#
+#         # Invalid form or forms - mistakes or something else?
+#         # Print problems to the terminal.
+#         # They'll also be shown to the user.
+#         else:
+#             print user_form.errors, profile_form.errors
+#
+#     # Not a HTTP POST, so we render our form using two ModelForm instances.
+#     # These forms will be blank, ready for user input.
+#     else:
+#         user_form = UserForm()
+#         profile_form = UserProfileForm()
+#
+#     # Render the template depending on the context.
+#     return render(request,
+#                   'chef/register.html',
+#                   {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+#
 
 # Use the login_required() decorator to ensure only those logged in can access the view.
-@login_required
+
 def user_logout(request):
     # Since we know the user is logged in, we can now just log them out.
     logout(request)
 
     # Take the user back to the homepage.
-    return HttpResponseRedirect('/chef/')
+    return HttpResponseRedirect('/')
 
 
 @login_required
@@ -107,8 +107,9 @@ def user_login(request):
                 # We'll send the user back to the homepage.
                 login(request, user)
                 # usertype=UserType.objects.filter(user=request.user.userprofile)[0]
-                print user.userprofile.type.name
-                if user.userprofile.type.name == "restaurant":
+                profile_list = NewUserProfile.objects.filter(profile=user)
+                print profile_list
+                if len(profile_list) == 0:
                     return HttpResponseRedirect('/restaurantprofilepage/' + str(user.id))
                 else:
                     return HttpResponseRedirect('/userprofilepage/' + str(user.id))
@@ -129,26 +130,26 @@ def user_login(request):
         return render(request, 'login.html', {})
 
 
-def new_restaurant_user(request):
-    if request.method == 'POST':
-        form = NewUserRestaurantForm
-        if form.is_valid():
-            form.save()
-    else:
-        form = NewUserRestaurantForm
-    context_dict = {'form': form}
-    return render(request, 'new_restaurant_user.html', context_dict)
-
-
-def new_worker_user(request):
-    if request.method == 'POST':
-        form = NewUserWorkerForm
-        if form.is_valid():
-            form.save()
-    else:
-        form = NewUserWorkerForm
-    context_dict = {'form': form}
-    return render(request, 'new_worker_user.html', context_dict)
+# def new_restaurant_user(request):
+#     if request.method == 'POST':
+#         form = NewUserRestaurantForm
+#         if form.is_valid():
+#             form.save()
+#     else:
+#         form = NewUserRestaurantForm
+#     context_dict = {'form': form}
+#     return render(request, 'new_restaurant_user.html', context_dict)
+#
+#
+# def new_worker_user(request):
+#     if request.method == 'POST':
+#         form = NewUserWorkerForm
+#         if form.is_valid():
+#             form.save()
+#     else:
+#         form = NewUserWorkerForm
+#     context_dict = {'form': form}
+#     return render(request, 'new_worker_user.html', context_dict)
 
 
 def index(request):
@@ -188,9 +189,9 @@ def register_restaurant(request):
                 return HttpResponse("Your chef account is disabled.")
         else:
             # Bad login details were provided. So we can't log the user in.
-            print "Invalid login details: {0}, {1}".format(username, password)
+            # print "Invalid login details: {0}, {1}".format(username, password)
             return HttpResponse("Invalid login details supplied.")
-        return redirect(request, '/chef/restaurantprofilepage/(?P<poster_id>\d+)')
+        return HttpResponseRedirect('/restaurantprofilepage/')
     return render(request, "register_restaurant.html")
 
 
@@ -200,6 +201,7 @@ def register_user(request):
                                      password=request.POST['password'])
         p = NewUserProfile(profile=u)
         p.type = UserType.objects.filter(name='user')[0]
+        print 'user'
         p.save()
         # Use Django's machinery to attempt to see if the username/password
         # combination is valid - a User object is returned if it is.
@@ -222,7 +224,7 @@ def register_user(request):
                 return HttpResponse("Your chef account is disabled.")
         else:
             # Bad login details were provided. So we can't log the user in.
-            print "Invalid login details: {0}, {1}".format(username, password)
+            # print "Invalid login details: {0}, {1}".format(username, password)
             return HttpResponse("Invalid login details supplied.")
     return render(request, 'register_user.html')
 
@@ -332,19 +334,21 @@ def edit_settings_restaurant(request):
 
 
 def edit_settings_user(request):
+    profile = NewUserProfile()
     if request.POST:
         print request.POST
-        profile = NewUserProfile()
         profile.profile = request.user
+        print request.user
         profile.name = request.POST['name']
         profile.job_description = request.POST['job_description']
         profile.previous_restaurants = request.POST['previous_restaurants']
         profile.job_titles_held = request.POST['job_titles_held']
         profile.years = int(request.POST['years'])
         profile.about_me = request.POST['about_me']
+        print profile
         profile.save()
         return HttpResponseRedirect('/userprofilepage/')
-    return render(request, 'edit_settings_user.html', {'user': request.user})
+    return render(request, 'edit_settings_user.html', {'worker': profile, 'user': request.user})
 
 
 def facts_page(request):
@@ -352,32 +356,36 @@ def facts_page(request):
 
 
 def userprofilepage(request):
-    print request.user
+    # print 'hello'
+    # print request.user
     worker_list = NewUserProfile.objects.filter(profile=request.user)
-    worker= worker_list[0]
+    # print len (worker_list)
+    worker = worker_list[len(worker_list) - 1]
+    # print worker
     return render(request, 'userprofilepage.html', {"worker": worker})
 
 
 def restaurantprofilepage(request):
-    restaurant = NewRestaurantProfile.objects.filter(profile=request.user)[0]
+    restaurant_list = NewRestaurantProfile.objects.filter(profile=request.user)
+    print len(restaurant_list)
+    restaurant = restaurant_list[len(restaurant_list) - 1]
+    print restaurant
     return render(request, 'restaurantprofilepage.html', {"restaurant": restaurant})
 
 
-def userprofilepageview(request, user_id):
-    j = User.objects.get(id=user_id)
-    print j
-    return render(request, 'userprofilepageview.html', {"user": j})
+def userprofilepageview(request, worker_id):
+    if request.POST:
+        worker = User.objects.get(id=worker_id)
+    return render(request, 'userprofilepageview.html', {"worker": worker})
 
 
-def restaurantprofilepageview(request, poster_id):
-    j = User.objects.get(id=poster_id)
-    print j
-    return render(request, 'restaurantprofilepageview.html', {"restaurant": j})
-
+def restaurantprofilepageview(request, restaurant_id):
+    restaurant = NewRestaurantProfile.objects.get(id=restaurant_id)
+    # restaurant_list = NewRestaurantProfile.objects.filter(profile=request.user)
+    # restaurant.name = restaurant_list[len(restaurant_list) - 1]
+    return render(request, 'restaurantprofilepageview.html', {"restaurant": restaurant})
 
 def inbox(request):
-    # if request.method == 'POST':
-    # rawdate=request.POST['']
     return render(request, 'inbox.html')
 
 
