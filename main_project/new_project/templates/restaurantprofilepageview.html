@@ -20,15 +20,15 @@
 {#  {% endblock %}#}
 
 {% block content %}
-
+<div id="body>"
 <h1>{{ restaurant.Name_Restaurant }}</h1>
 
-{{ restaurant.Name_Restaurant }}<br>
-{{ restaurant.restaurant_address }}<br>
-{{ restaurant.Main_contact_name }}<br>
-{{ restaurant.contact_number }}<br>
-{{ restaurant.contact_email }}<br>
-{{ restaurant.food_style }}<br>
-{{ restaurant.Signature_dish }}<br>
-
+{#Restaurant Name: {{ restaurant.Name_Restaurant }}<br>#}
+<h3><em>Address:  </em><br>{{ restaurant.restaurant_address }}</h3><br>
+<h3><em>Main Contact Name:  </em><br>{{ restaurant.Main_contact_name }}</h3><br>
+<h3><em>Contact Number:  </em><br>{{ restaurant.contact_number }}</h3><br>
+<h3><em>Contact Email:  </em><br>{{ restaurant.contact_email }}</h3><br>
+<h3><em>Food Style:  </em><br>{{ restaurant.food_style }}</h3><br>
+<h3><em>Signature Dish:  </em><br>{{ restaurant.Signature_dish }}</h3><br>
+</div>
 {% endblock %}

@@ -29,13 +29,13 @@ This is your Profile Page</h2></P ALIGN=Center>
 
 </div>
 <div class="value">
-<input value="{{ worker.name }}"/><br>
-<input value="{{ worker.job_description }}"/><br>
-<input value="{{ worker.role }}"/><br>
-<input value="{{ worker.previous_restaurants }}"/><br>
-<input value="{{ worker.job_titles_held }}"/><br>
-<input value="{{ worker.years }}"/><br>
-<input value="{{ worker.about_me }}"/><br>
+<h1>Name: {{ worker.name }}</h1><br>
+<h3><em>Description of my skills:     </em><br>{{ worker.job_description }}</h3><br>
+<h3><em>I am a:    </em><br>{{ worker.role }}</h3><br>
+<h3><em>Previous Restaurants I have worked at:     </em><br>{{ worker.previous_restaurants }}</h3><br>
+<h3><em>Job Titles I have held:     </em><br>{{ worker.job_titles_held }}</h3><br>
+<h3><em>Years in the restaurant industry:     </em><br>{{ worker.years }}</h3><br>
+<h3><em>A little bit about me:     </em><br>{{ worker.about_me }}</h3><br>
 </div>
 
 {% endblock %}

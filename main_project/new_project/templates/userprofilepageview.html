@@ -22,13 +22,13 @@
 {% block content %}
 
 <div class="value">
-{{ worker.name }}<br>
-{{ worker.job_description }}<br>
-{{ worker.role }}<br>
-{{ worker.previous_restaurants }}<br>
-{{ worker.job_titles_held }}<br>
-{{ worker.years }}"/><br>
-{{ worker.about_me }}
+<h1>Name: {{ worker.name }}</h1><br>
+<h3><em>Description of my skills:     </em><br>{{ worker.job_description }}</h3><br>
+<h3><em>I am a:    </em><br>{{ worker.role }}</h3><br>
+<h3><em>Previous Restaurants I have worked at:     </em><br>{{ worker.previous_restaurants }}</h3><br>
+<h3><em>Job Titles I have held:     </em><br>{{ worker.job_titles_held }}</h3><br>
+<h3><em>Years in the restaurant industry:     </em><br>{{ worker.years }}</h3><br>
+<h3><em>A little bit about me:     </em><br>{{ worker.about_me }}</h3><br>
 </div>
 
 {% endblock %}

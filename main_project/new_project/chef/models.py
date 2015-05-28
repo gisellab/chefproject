@@ -74,9 +74,9 @@ class NewUserProfile(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     role = models.CharField(max_length=255, null=True, blank=True)
     job_description = models.CharField(max_length=255, null=True, blank=True)
-    previous_restaurants = models.CharField(max_length=255,null=True, blank=True )
+    previous_restaurants = models.CharField(max_length=255, null=True, blank=True )
     job_titles_held = models.CharField(max_length=20, null=True, blank=True)
-    years = models.IntegerField(null=True, blank=True)
+    years = models.CharField(max_length=20, null=True, blank=True)
     about_me = models.TextField(max_length=150,null=True, blank=True )
     Upload_profile_picture = models.ImageField(blank=True, null=True)
     # skill = models.ManyToManyField(Skill)
@@ -118,7 +118,7 @@ class PostNewJob(models.Model):
 
 
 class Applicant(models.Model):
-    job = models.ForeignKey(PostNewJob)
+    job = models.ForeignKey(PostNewJob, related_name='applicant')
     applicant = models.ForeignKey(User)
     date_applied = models.DateField(auto_now=True)
 

@@ -83,6 +83,7 @@ def restricted(request):
 
 
 def user_login(request):
+    request.session.set_expiry(900)
     # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
         # Gather the username and password provided by the user.
@@ -258,7 +259,7 @@ def add_a_new_job(request):
         job.pay_per_hour = int(request.POST['pay_per_hour'])
         job.start_time = int(request.POST['start_time'])
         job.description = request.POST['description']
-        job.type = request.POST['type']
+        # job.type = request.POST['type']
         job.poster = request.user
         job.save()
         context_dict = {'boldmessage': "Thanks for posting your new job"}
@@ -286,7 +287,7 @@ def job_applied(request):
 
 
 def jobs_pending(request):
-    return render(request, 'jobs_pending.html', {'applications': Applicant.objects.filter(job__poster=request.user)})
+    return render(request, 'jobs_pending.html', {'jobs': PostNewJob.objects.filter(poster=request.user)})
 
 
 def previous_jobs(request):
@@ -343,7 +344,7 @@ def edit_settings_user(request):
         profile.job_description = request.POST['job_description']
         profile.previous_restaurants = request.POST['previous_restaurants']
         profile.job_titles_held = request.POST['job_titles_held']
-        profile.years = int(request.POST['years'])
+        profile.years = request.POST['years']
         profile.about_me = request.POST['about_me']
         print profile
         profile.save()
@@ -356,12 +357,9 @@ def facts_page(request):
 
 
 def userprofilepage(request):
-    # print 'hello'
-    # print request.user
     worker_list = NewUserProfile.objects.filter(profile=request.user)
     # print len (worker_list)
     worker = worker_list[len(worker_list) - 1]
-    # print worker
     return render(request, 'userprofilepage.html', {"worker": worker})
 
 
@@ -374,15 +372,18 @@ def restaurantprofilepage(request):
 
 
 def userprofilepageview(request, worker_id):
-    if request.POST:
-        worker = User.objects.get(id=worker_id)
+    print worker_id
+    user = User.objects.get(id=worker_id)
+    worker_list = NewUserProfile.objects.filter(profile=user)
+    worker = worker_list[len(worker_list) - 1]
     return render(request, 'userprofilepageview.html', {"worker": worker})
 
 
 def restaurantprofilepageview(request, restaurant_id):
-    restaurant = NewRestaurantProfile.objects.get(id=restaurant_id)
-    # restaurant_list = NewRestaurantProfile.objects.filter(profile=request.user)
-    # restaurant.name = restaurant_list[len(restaurant_list) - 1]
+    print restaurant_id
+    user = User.objects.get(id=restaurant_id)
+    restaurant_list = NewRestaurantProfile.objects.filter(profile=user)
+    restaurant = restaurant_list[len(restaurant_list) - 1]
     return render(request, 'restaurantprofilepageview.html', {"restaurant": restaurant})
 
 def inbox(request):

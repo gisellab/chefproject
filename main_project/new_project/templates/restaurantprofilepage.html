@@ -11,8 +11,8 @@
             <a href="{% url 'edit_settings_restaurant' %}" class="button">Edit Settings</a>
             <a href="{% url 'jobs_pending' %}" class="button">Jobs Pending</a>
             <a href="{% url 'add_a_new_job' %}" class="button">Add New Job</a>
-            <a href="{% url 'inbox' %}" class="button">Inbox</a>
-            <a href="{% url 'buy_credit' %}" class="button">Buy Credit</a>
+{#            <a href="{% url 'inbox' %}" class="button">Inbox</a>#}
+{#            <a href="{% url 'buy_credit' %}" class="button">Buy Credit</a>#}
             <a href="{% url 'previous_jobs' %}" class="button">Previous Jobs</a>
 
         {% endblock %}
@@ -21,15 +21,17 @@
         {% endblock %}
 
         {% block content %}
+
 <h2>Welcome {{ user.username }}<br>
-{{ restaurant.Name_Restaurant }}
-This is your Profile Page</h2>
-<input value="{{ restaurant.Name_Restaurant }}"/><br>
-<input value="{{ restaurant.restaurant_address }}"/><br>
-<input value="{{ restaurant.Main_contact_name }}"/><br>
-<input value="{{ restaurant.contact_number }}"/><br>
-<input value="{{ restaurant.contact_email }}"/><br>
-<input value="{{ restaurant.food_style }}"/><br>
-<input value="{{ restaurant.Signature_dish }}"/><br>
+
+<h2><em>Restaurant Name: </em></h2><h1>{{ restaurant.Name_Restaurant }}</h1>
+
+{#Restaurant Name: {{ restaurant.Name_Restaurant }}<br>#}
+<h3><em>Address:  </em><br>{{ restaurant.restaurant_address }}</h3><br>
+<h3><em>Main Contact Name:  </em><br>{{ restaurant.Main_contact_name }}</h3><br>
+<h3><em>Contact Number:  </em><br>{{ restaurant.contact_number }}</h3><br>
+<h3><em>Contact Email:  </em><br>{{ restaurant.contact_email }}</h3><br>
+<h3><em>Food Style:  </em><br>{{ restaurant.food_style }}</h3><br>
+<h3><em>Signature Dish:  </em><br>{{ restaurant.Signature_dish }}</h3><br>
 
         {% endblock %}

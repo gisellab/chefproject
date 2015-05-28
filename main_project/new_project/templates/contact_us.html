@@ -1,7 +1,19 @@
 {% extends "base.html" %}
 
 {% block page_subtitle %}Contact Us{% endblock %}
-{% block content %}Here is how to contact us at about Guest chef
-<a href=“mailto:gisellabarbaray@gmail.com”>Email us</a>
+{% block content %}<h1>CONTACT US </h1><br>
+
+
+<div id="body"></div>
+<h1><form action="mailto:admin@example.com" enctype="text/plain" method="post">
+<p>Name: <input name="Name" type="text" id="Name" size="40"></p>
+<p>E-mail address: <input name="E-mail" type="text" id="E-mail" size="40"></p>
+<p>Comment:</p>
+<p><textarea name="Comment" cols="55" rows="5"
+id="Comment"></textarea></p>
+<p><input type="submit" name="Submit" value="Submit"></p>
+</form></h1>
+</div>
+
 {% endblock %}
 

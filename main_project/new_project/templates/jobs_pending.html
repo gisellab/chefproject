@@ -12,23 +12,32 @@
             <a href="{% url 'jobs_pending' %}" class="button">Jobs Pending</a>
             <a href="{% url 'add_a_new_job' %}" class="button">Add New Job</a>
             <a href="{% url 'inbox' %}" class="button">Inbox</a>
-            <a href="{% url 'buy_credit' %}" class="button">Buy Credit</a>
+{#            <a href="{% url 'buy_credit' %}" class="button">Buy Credit</a>#}
             <a href="{% url 'previous_jobs' %}" class="button">Previous Jobs</a>
 
         {% endblock %}
  </div>
 
         {% endblock %}
+{% block content %}
+{% for j in jobs %}
 
-        {% block content %}
-       {% for a in applications %}
 
-<div class="job_tile">
-<h3>{{ a.applicant.username }}<br></h3>
-{{ a.date_applied }}<br>
-{{ a.job.date_of_job }}<br>
-{{ a.job.name_of_job}}<br>
-{#<h2><a href="/apply_for_a_new_job/{{ j.id }}/">APPLY</a></h2>#}
-</div>
+    {#<h3>{{ a.applicant.username }}<br></h3>#}
+    {#<h3>{{ job.id }}<br></h3>#}
+    <h3><em>Name of Job: </em><br>{{ j.name_of_job}}</h3><br>
+
+    Date of Job: <br>{{ j.date_of_job }}<br>
+    <h2>Applicants</h2>
+    {#<h2><a href="/apply_for_a_new_job/{{ j.id }}/">APPLY</a></h2>#}
+
+    {% for a in j.applicant.all %}
+    <div class="job_tile">
+    {{ a.date_applied }}<br>
+    <h2><a href="/userprofilepageview/{{ a.applicant.id }}/">x{{ a.applicant.username }} </a></h2>
+    </div>
+    {% endfor %}
+
 {% endfor %}
+
 {% endblock %}
